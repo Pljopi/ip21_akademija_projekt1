@@ -3,7 +3,7 @@
 $currency = readline('Enter a string:');
 
 if ($currency == '') {
-    echo  "When propmted to enter a string, enter a crypto currency tag... try again... ";
+    echo  "When propmted to enter a string, enter a crypto currency tag... like BTC or ETH  ";
 } else if ($currency = "help") {
     echo "When propmted too enter a string, enter a cryptocurrency TAG, try BTC";
 } else {
