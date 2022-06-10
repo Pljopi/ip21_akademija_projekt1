@@ -1,6 +1,6 @@
 <?php
 
-$currency = readline('Enter a string:');
+$currency = readline('enter a cryptocurrency TAG:');
 
 if ($currency == '') {
     echo  "When propmted to, enter a crypto currency tag... try again... ";
