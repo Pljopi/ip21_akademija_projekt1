@@ -40,7 +40,7 @@ function pairANY($criptocurrency, $currency,)
     echo "Spot price of " . $json_data["data"]["base"] . " is " . $json_data["data"]["amount"] . " " . $json_data["data"]["currency"]; //ta je za pair price
 
 }
-//če je vse ok se izpelje funkcija
+
 if (currency($currency, $jsonALL_data) == true && criptocurrency($criptocurrency, $jsonALL_data) == true) {
     pairANY($criptocurrency, $currency);
 } else if ($currency == "help" || $criptocurrency == "help") {
