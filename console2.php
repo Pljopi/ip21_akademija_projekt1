@@ -1,12 +1,8 @@
 <?php
 set_error_handler("errorHandler", E_WARNING);
-function errorHandler(
-    int $type,
-    string $msg,
-    ?string $file = null,
-    ?int $line = null
-) {
-    echo " Your input is incorrect, after file name enter cryptocurrency TAG, space, currency TAG"; //$type . " " . $msg . " " . " in " . $file . " on line " . $line . "BLYAT";
+function errorHandler()
+{
+    echo " Your input is incorrect, after file name enter cryptocurrency TAG, space, currency TAG";
     exit;
 }
 
