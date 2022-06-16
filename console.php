@@ -132,5 +132,5 @@ function errorHandler(
         echo "You did not enter the currency TAG \n";
     }
 
-    echo $type . '//// ' . $msg . ' /// ' . $file . ' //// ' . $line;
+    //echo $type . '//// ' . $msg . ' /// ' . $file . ' //// ' . $line;
 };
