@@ -61,21 +61,17 @@ function printPricePair($pricePair)
 //Call api function, placeholder variable x.
 function callApi($x)
 {
-    if (in_array("HTTP/1.1 404 Not Found", get_headers($x))) {
-        echo "Api is down, or you have entered a unsupported currency pair. First enter the Fiat Currency TAG, then enter the Cripto Currency TAG \n";
-        exit();
-    }
-    @$jsonAll = file_get_contents($x);
-    try {
-        if ($jsonAll === false) {
-            throw new Exception("Could not decode json file\n");
-        }
-        return $jsonAll_data = json_decode($jsonAll, true);
-    } catch (\Exception$e) {
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $x);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    if (curl_exec($ch) === false) {
+        echo "Api is down\n";
+    } else {
+        $curl_data = curl_exec($ch);
+        return json_decode($curl_data, true);
 
-        echo $e->getMessage();
-        exit();
     }
+    curl_close($ch);
 }
 
 //print supported currencies list.
