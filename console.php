@@ -61,6 +61,10 @@ function printPricePair($pricePair)
 //Call api function, placeholder variable x.
 function callApi($x)
 {
+    if (in_array("HTTP/1.1 404 Not Found", get_headers($x))) {
+        echo "Api is down, or you have entered a unsupported currency pair. First enter the Fiat Currency TAG, then enter the Cripto Currency TAG \n";
+        exit();
+    }
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $x);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
