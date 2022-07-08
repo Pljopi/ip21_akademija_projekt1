@@ -1,8 +1,6 @@
 <?php
-//Set supported currencies list api url variable
-$urlList = "https://api.coingecko.com/api/v3/simple/supported_vs_currencies";
-//Set variable as decoded array of supported currenices
-$listOfSupportedCurrencies = apiCall($urlList);
+//Set variable as decoded array of supported currenices, got from the apiCall function
+$listOfSupportedCurrencies = apiCall("https://api.coingecko.com/api/v3/simple/supported_vs_currencies");
 //if no user input echo Help, and exit.
 if (!isset($argv[1])) {
     helpTxt();
