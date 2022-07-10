@@ -6,7 +6,7 @@ function echoPrice($criptoCurrencyTAG, $pairValue, $currencyTAG)
     echo sprintf("Spot price of %s is %s %s\n", $criptoCurrencyTAG, $pairValue, $currencyTAG);
     return;
 }
-
+// Echo list of supported currencies, each currency in a new line
 function printList($listOfSupportedCurrencies)
 {
     natcasesort($listOfSupportedCurrencies);
@@ -14,7 +14,7 @@ function printList($listOfSupportedCurrencies)
         echo "$value \n";
     }
 }
-
+//Echo help txt
 function helpTxt()
 {
     echo "Help -\n After file name input either >list< to get a list of supported currencies\nor\n>price< >FiatCurrency< TAG >criptoCurrency TAG< \n";
