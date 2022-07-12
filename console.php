@@ -1,13 +1,16 @@
 <?php
 //Imports functions from model.php, for api calling
 require_once './lib/model.php';
+$model = new Model;
+//sets variable $list as return value from the $model->getList()
 
 //immports functions from consoleView.php for echoing responses to the user.
 require_once './lib/views/consoleView.php';
+$view = new ConsoleView;
 
 //if no user input echo Help, and exit.
 if (!isset($argv[1])) {
-    printHelpTxt();
+    $view->printHelpTxt();
     return;
 }
 //Controller
@@ -15,11 +18,12 @@ try { //try, catch block around the controller
     switch (strtolower($argv[1])) {
 //if 1st user input is help
         case 'help';
-            printHelpTxt();
+            $view->printHelpTxt();
             break;
 //If 1st user input is 'list'
         case 'list';
-            printList();
+            $list = $model->getList();
+            $view->printList($list);
             break;
 //If first user inout is 'price'
         case 'price';
@@ -34,28 +38,29 @@ try { //try, catch block around the controller
                 throw new \Exception("You have entered two of the same currencies, input different currencies\n");
 
             } //Checks if criptocurrency and currency variables are on the list of supported currencies
-            if (!areTheEnterdTagsOnList($currency, getList()) || !areTheEnterdTagsOnList($criptoCurrency, getList())) {
+            $list = $model->getList();
+            if (!areTheEnterdTagsOnList($currency, $list) || !areTheEnterdTagsOnList($criptoCurrency, $list)) {
                 throw new \Exception("The currency pair you have entered is not on the list of supported currencies\n");
 
             }
 
             //sets the return value from the getPrice function as a list of variables for the printPrice function;
-            list($criptoCurrencyTAG, $pairValue, $currencyTAG) = getPrice($criptoCurrency, $currency);
+            list($criptoCurrencyTAG, $pairValue, $currencyTAG) = $model->getPrice($criptoCurrency, $currency);
             //prints the final value of Criptocurrency denominated in the fiat currency.
-            printPrice($criptoCurrencyTAG, $pairValue, $currencyTAG);
+            $view->printPrice($criptoCurrencyTAG, $pairValue, $currencyTAG);
             break;
 
         default;
-            return printHelpTxt();
+            return $view->printHelpTxt();
     }
 } catch (\Exception$e) { //Catches exceptions, and returns the exception msg.
     echo $e->getMessage();
 }
 
 //Checks if user input 2/3 are on the list of supported currencies.
-function areTheEnterdTagsOnList($currencyOrCriptoCurrency)
+function areTheEnterdTagsOnList($currencyOrCriptoCurrency, $list)
 {
-    return array_search($currencyOrCriptoCurrency, getList(), true) !== false;
+    return array_search($currencyOrCriptoCurrency, $list, true) !== false;
 
 }
 //Checks if user input 1 and 2 have been filled, and are not longer than 5 characters.
@@ -70,3 +75,4 @@ function ifNotEmptyOrLong($argv)
     }
     return true;
 }
+//sets variable with api url with list of all supported currencies
