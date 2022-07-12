@@ -7,7 +7,7 @@ require_once './lib/views/consoleView.php';
 
 //if no user input echo Help, and exit.
 if (!isset($argv[1])) {
-    helpTxt();
+    printHelpTxt();
     return;
 }
 //Controller
@@ -15,11 +15,11 @@ try { //try, catch block around the controller
     switch (strtolower($argv[1])) {
 //if 1st user input is help
         case 'help';
-            helpTxt();
+            printHelpTxt();
             break;
 //If 1st user input is 'list'
         case 'list';
-            printList($getList);
+            printList();
             break;
 //If first user inout is 'price'
         case 'price';
@@ -34,28 +34,28 @@ try { //try, catch block around the controller
                 throw new \Exception("You have entered two of the same currencies, input different currencies\n");
 
             } //Checks if criptocurrency and currency variables are on the list of supported currencies
-            if (!areTheEnterdTagsOnList($currency, $getList) || !areTheEnterdTagsOnList($criptoCurrency, $getList)) {
+            if (!areTheEnterdTagsOnList($currency, getList()) || !areTheEnterdTagsOnList($criptoCurrency, getList())) {
                 throw new \Exception("The currency pair you have entered is not on the list of supported currencies\n");
 
             }
 
-            //sets the return value from the getPrice function as a list of variables for the echoPrice function;
+            //sets the return value from the getPrice function as a list of variables for the printPrice function;
             list($criptoCurrencyTAG, $pairValue, $currencyTAG) = getPrice($criptoCurrency, $currency);
             //prints the final value of Criptocurrency denominated in the fiat currency.
-            echoPrice($criptoCurrencyTAG, $pairValue, $currencyTAG);
+            printPrice($criptoCurrencyTAG, $pairValue, $currencyTAG);
             break;
 
         default;
-            return helpTxt();
+            return printHelpTxt();
     }
 } catch (\Exception$e) { //Catches exceptions, and returns the exception msg.
     echo $e->getMessage();
 }
 
 //Checks if user input 2/3 are on the list of supported currencies.
-function areTheEnterdTagsOnList($currencyOrCriptoCurrency, $getList)
+function areTheEnterdTagsOnList($currencyOrCriptoCurrency)
 {
-    return array_search($currencyOrCriptoCurrency, $getList, true) !== false;
+    return array_search($currencyOrCriptoCurrency, getList(), true) !== false;
 
 }
 //Checks if user input 1 and 2 have been filled, and are not longer than 5 characters.

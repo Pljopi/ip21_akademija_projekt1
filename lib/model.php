@@ -1,6 +1,10 @@
 <?php
 //sets variable with api url with list of all supported currencies
-$getList = apiCall("https://api.coingecko.com/api/v3/simple/supported_vs_currencies");
+function getList()
+{
+    return apiCall("https://api.coingecko.com/api/v3/simple/supported_vs_currencies");
+}
+
 //Call api function for currencies list and price pair value
 function apiCall($pricePairOrUrlPair)
 {
@@ -12,7 +16,7 @@ function apiCall($pricePairOrUrlPair)
         ));
         $curl_data = curl_exec($ch);
         $httpCode = (curl_getinfo($ch, CURLINFO_HTTP_CODE));
-        //Checks that the url request has succeded, otherwise it ends execution and echoes message for user
+        //Checks that the url request has succeded, otherwise it ends execution and echoes message for user //not sure, if I should be catching exceptions in the model part
         if (json_decode($curl_data, true) === null || json_decode($curl_data, true) === false) {
             throw new \Exception("Api is down\n");
 
@@ -27,7 +31,7 @@ function apiCall($pricePairOrUrlPair)
 
     } catch (\Exception$e) { //Catches exceptions, and returns the exception msg.
         echo $e->getMessage();
-        exit; //without this exit, function keeps executing
+        exit; //without this exit, function keeps executing. Don't know how to solve
     }
 }
 
@@ -44,4 +48,3 @@ function getPrice($criptoCurrency, $currency)
     ];
     return [$pricePair[0], $pricePair[1], $pricePair[2]];
 }
-//Echoes price pair, uses $pricePair array values 0-2 as parameters (from inside getPrice function)
