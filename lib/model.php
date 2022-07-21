@@ -1,17 +1,37 @@
 <?php
 
+/**
+ * [Description Model]
+ */
 class Model
-{ //gets the list of supported currencies by passing the api url as variable to the api call.
+{
+
+    /**
+     * @var null
+     */
+    private $listoOfCurrencies = null;
+
+    /**
+     * @return [type]
+     */
     public function getList()
     {
-
-        return $this->apiCall("https://api.coingecko.com/api/v3/simple/supported_vs_currencies");
+        if ($this->listoOfCurrencies === !null) {
+            return $this->listoOfCurrencies;
+        } else {
+            $this->listoOfCurrencies = $this->apiCall("https://api.coingecko.com/api/v3/simple/supported_vs_currencies");
+            return $this->listoOfCurrencies;
+        }
     }
 
-    //Get's price pair value and echoes it to the user
+    /**
+     * @param mixed $criptoCurrency
+     * @param mixed $currency
+     *
+     * @return [type]
+     */
     public function getPrice($criptoCurrency, $currency)
     {
-
         $pricePairUrl = sprintf("https://api.coinbase.com/v2/prices/%s-%s/spot", $criptoCurrency, $currency);
         $pricePairUrlApiCall = $this->apiCall($pricePairUrl);
         $pricePair = [
@@ -21,7 +41,12 @@ class Model
         ];
         return [$pricePair[0], $pricePair[1], $pricePair[2]];
     }
-//Call api function for currencies list and price pair value
+
+    /**
+     * @param mixed $pricePairOrUrlPair
+     *
+     * @return [type]
+     */
     private function apiCall($pricePairOrUrlPair)
     {
         try {
@@ -45,10 +70,22 @@ class Model
 
             return json_decode($curl_data, true);
 
-        } catch (\Exception$e) { //Catches exceptions, and returns the exception msg.
+        } catch (\Exception$e) {
             echo $e->getMessage();
-            exit; //without this exit, function keeps executing. Don't know how to solve
+            exit;
         }
+    }
+
+    /**
+     * @param mixed $currency
+     *
+     * @return [type]
+     */
+    public function areTheEnterdTagsOnList($currency)
+    {
+        $list = $this->getList();
+        return array_search($currency, $list, true) !== false;
+
     }
 
 }

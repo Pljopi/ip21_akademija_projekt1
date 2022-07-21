@@ -1,78 +1,100 @@
 <?php
-//Imports functions from model.php, for api calling
+
+/**
+ * @author Andrej C. <andrejcepak@gmail.com>
+ */
+
+/**
+ * Instantiating Twig and model.php
+ * @var $loader
+ * @var $twig
+ * @var $model
+ */
+require_once './vendor/autoload.php';
+$loader = new \Twig\Loader\FilesystemLoader('lib/views');
+$twig = new \Twig\Environment($loader, [
+]);
+
 require_once './lib/model.php';
-$model = new Model;
-//sets variable $list as return value from the $model->getList()
-
-//immports functions from consoleView.php for echoing responses to the user.
-require_once './lib/views/consoleView.php';
-$view = new ConsoleView;
-
-//if no user input echo Help, and exit.
+$model = new Model();
+/**
+ * @return [string]
+ */
 if (!isset($argv[1])) {
-    $view->printHelpTxt();
+
+    echo $twig->render('help.html.twig', []);
+
     return;
 }
-//Controller
-try { //try, catch block around the controller
+/**
+ * controller block
+ */
+try {
     switch (strtolower($argv[1])) {
-//if 1st user input is help
+/**
+ * cases are triggered by the coresponding user input
+ * @var $list
+ * @var $argv
+ * @var $criptocurrency
+ * @var $currency
+ * @var $criptoCurrencyTAG
+ * @var $pairValue
+ * @var $currencyTAG
+ * @return [string]
+ */
         case 'help';
-            $view->printHelpTxt();
+            echo $twig->render('help.html.twig', []);
             break;
-//If 1st user input is 'list'
+
         case 'list';
             $list = $model->getList();
-            $view->printList($list);
+            echo $twig->render('list.html.twig', ['ListOfCurrencies' => $list]);
             break;
-//If first user inout is 'price'
+
         case 'price';
-            //Checks if 2nd and 3rd input are there and that they are not too long. Once it passes this function it defined the 2nd and 3rd user input as variables.
-            if (ifNotEmptyOrLong($argv)) {
-                //Sets user input 2 and 3 as variables.
+
+            if (!isset($argv[2]) || !isset($argv[3])) {
+                throw new \Exception("After price, enter criptoCurrency and currency TAG\n");
+
+            } else if (ifLongOrShort($argv[2]) && ifLongOrShort($argv[3])) {
+
                 $criptoCurrency = strtolower($argv[2]);
                 $currency = strtolower($argv[3]);
             }
-            //Checks that the enterd currency  and criptocurrency TAGs are not the same
+
             if ($currency === $criptoCurrency) {
                 throw new \Exception("You have entered two of the same currencies, input different currencies\n");
 
-            } //Checks if criptocurrency and currency variables are on the list of supported currencies
+            }
             $list = $model->getList();
-            if (!areTheEnterdTagsOnList($currency, $list) || !areTheEnterdTagsOnList($criptoCurrency, $list)) {
+            if (!$model->areTheEnterdTagsOnList($currency) || !$model->areTheEnterdTagsOnList($criptoCurrency)) {
                 throw new \Exception("The currency pair you have entered is not on the list of supported currencies\n");
 
             }
 
-            //sets the return value from the getPrice function as a list of variables for the printPrice function;
             list($criptoCurrencyTAG, $pairValue, $currencyTAG) = $model->getPrice($criptoCurrency, $currency);
-            //prints the final value of Criptocurrency denominated in the fiat currency.
-            $view->printPrice($criptoCurrencyTAG, $pairValue, $currencyTAG);
+
+            echo $twig->render('price.html.twig', ['criptoCurrencyTAG' => $criptoCurrencyTAG, 'pairValue' => $pairValue, 'currencyTAG' => $currencyTAG]);
             break;
 
         default;
-            return $view->printHelpTxt();
+            echo $twig->render('help.html.twig', []);
     }
-} catch (\Exception$e) { //Catches exceptions, and returns the exception msg.
+
+} catch (\Exception$e) {
     echo $e->getMessage();
 }
 
-//Checks if user input 2/3 are on the list of supported currencies.
-function areTheEnterdTagsOnList($currencyOrCriptoCurrency, $list)
+/**
+ * @param mixed $userInput
+ *
+ * @return [type]
+ */
+function ifLongOrShort($userInput)
 {
-    return array_search($currencyOrCriptoCurrency, $list, true) !== false;
-
-}
-//Checks if user input 1 and 2 have been filled, and are not longer than 5 characters.
-function ifNotEmptyOrLong($argv)
-{
-    if (empty($argv[2]) || empty($argv[3])) {
-        throw new \Exception("After price, enter criptoCurrency and currency TAG\n");
-
-    } else if ((strlen($argv[2]) > 5) || (strlen($argv[3])) > 5) {
-        throw new \Exception("User input error - no input can be longer than 5 characters\n");
+    if (strlen($userInput) >= 5 or (strlen($userInput) <= 2)) {
+        throw new \Exception("User input error - no input can be longer than 5 characters or shorter than 2 characters\n");
 
     }
     return true;
 }
-//sets variable with api url with list of all supported currencies
