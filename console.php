@@ -22,7 +22,7 @@ $model = new Model();
  */
 if (!isset($argv[1])) {
 
-    echo $twig->render('help.html.twig', []);
+    echo $twig->render('help.twig', []);
 
     return;
 }
@@ -32,12 +32,12 @@ if (!isset($argv[1])) {
 try {
     switch (strtolower($argv[1])) {
         case 'help';
-            echo $twig->render('help.html.twig', []);
+            echo $twig->render('help.twig', []);
             break;
 
         case 'list';
             $list = $model->getList();
-            echo $twig->render('list.html.twig', ['ListOfCurrencies' => $list]);
+            echo $twig->render('list.twig', ['ListOfCurrencies' => $list]);
             break;
 
         case 'price';
@@ -63,18 +63,18 @@ try {
 
             list($criptoCurrencyTAG, $pairValue, $currencyTAG) = $model->getPrice($criptoCurrency, $currency);
 
-            echo $twig->render('price.html.twig', ['criptoCurrencyTAG' => $criptoCurrencyTAG, 'pairValue' => $pairValue, 'currencyTAG' => $currencyTAG]);
+            echo $twig->render('price.twig', ['criptoCurrencyTAG' => $criptoCurrencyTAG, 'pairValue' => $pairValue, 'currencyTAG' => $currencyTAG]);
             break;
 
         default;
-            echo $twig->render('help.html.twig', []);
+            echo $twig->render('help.twig', []);
     }
 
 } catch (\Exception$e) {
     echo $e->getMessage();
 }
 
-/**
+/**!
  * @param mixed $userInput
  *
  * @return [type]
@@ -82,7 +82,7 @@ try {
 function ifLongOrShort($userInput, $twig)
 {
     if (strlen($userInput) >= 5 or (strlen($userInput) <= 2)) {
-        throw new \Exception($twig->render('error$message.html.twig', []));
+        throw new \Exception($twig->render('error.$message.twig', []));
 
     }
     return true;

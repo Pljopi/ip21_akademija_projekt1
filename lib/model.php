@@ -9,18 +9,18 @@ class Model
     /**
      * @var null
      */
-    private $listoOfCurrencies = null;
+    private $listOfCurencies = null;
 
     /**
      * @return [type]
      */
     public function getList()
     {
-        if ($this->listoOfCurrencies) {
-            return $this->listoOfCurrencies;
+        if ($this->listOfCurencies) {
+            return $this->listOfCurencies;
         } else {
-            $this->listoOfCurrencies = $this->apiCall("https://api.coingecko.com/api/v3/simple/supported_vs_currencies");
-            return $this->listoOfCurrencies;
+            $this->listOfCurencies = $this->apiCall("https://api.coingecko.com/api/v3/simple/supported_vs_currencies");
+            return $this->listOfCurencies;
         }
     }
 
