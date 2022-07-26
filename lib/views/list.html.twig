@@ -1,3 +1,28 @@
+
+<!DOCTYPE> 
+<html>
+<head>
+<link rel="stylesheet" href="style.css">
+ <meta charset="UTF-8">
+  <meta name="description" content="Criptocurrency price API">
+  <meta name="keywords" content="PHP, Twig, Composer, CSS, HTML">
+  <meta name="author" content="Yo Mama">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<div class="listOfSupportedCurrencies">
+<h1>List of all supported currencies</h1> <br>
+
 {% for currency in ListOfCurrencies %}
-*{{currency}}
+<ul>
+  <li>{{loop.index}} .   {{currency}}</li>
+
+</ul>  
 {% endfor %}
+</div>
+</body>
+</html>
+
+
+
+

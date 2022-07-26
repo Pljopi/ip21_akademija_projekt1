@@ -31,17 +31,6 @@ if (!isset($argv[1])) {
  */
 try {
     switch (strtolower($argv[1])) {
-/**
- * cases are triggered by the coresponding user input
- * @var $list
- * @var $argv
- * @var $criptocurrency
- * @var $currency
- * @var $criptoCurrencyTAG
- * @var $pairValue
- * @var $currencyTAG
- * @return [string]
- */
         case 'help';
             echo $twig->render('help.html.twig', []);
             break;
@@ -56,7 +45,7 @@ try {
             if (!isset($argv[2]) || !isset($argv[3])) {
                 throw new \Exception("After price, enter criptoCurrency and currency TAG\n");
 
-            } else if (ifLongOrShort($argv[2]) && ifLongOrShort($argv[3])) {
+            } else if (ifLongOrShort($argv[2], $twig) && ifLongOrShort($argv[3], $twig)) {
 
                 $criptoCurrency = strtolower($argv[2]);
                 $currency = strtolower($argv[3]);
@@ -90,10 +79,10 @@ try {
  *
  * @return [type]
  */
-function ifLongOrShort($userInput)
+function ifLongOrShort($userInput, $twig)
 {
     if (strlen($userInput) >= 5 or (strlen($userInput) <= 2)) {
-        throw new \Exception("User input error - no input can be longer than 5 characters or shorter than 2 characters\n");
+        throw new \Exception($twig->render('error$message.html.twig', []));
 
     }
     return true;

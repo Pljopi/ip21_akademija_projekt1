@@ -16,7 +16,7 @@ class Model
      */
     public function getList()
     {
-        if ($this->listoOfCurrencies === !null) {
+        if ($this->listoOfCurrencies) {
             return $this->listoOfCurrencies;
         } else {
             $this->listoOfCurrencies = $this->apiCall("https://api.coingecko.com/api/v3/simple/supported_vs_currencies");
