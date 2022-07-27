@@ -88,4 +88,21 @@ class Model
 
     }
 
+    /**
+     * @param mixed $list
+     *
+     * @return [type]
+     */
+    public function favouriteCurrency($list)
+    {
+        if (strtolower(readline()) === 'y' || strtolower(readline()) === 'yes') {
+            echo "Enter currency code:\n";
+            return (explode(",", str_replace(" ", "", readline())));
+        } else {
+            echo "Bye!\n";
+            exit;
+        }
+
+    }
+
 }

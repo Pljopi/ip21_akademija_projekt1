@@ -38,6 +38,17 @@ try {
         case 'list';
             $list = $model->getList();
             echo $twig->render('list.twig', ['ListOfCurrencies' => $list]);
+            echo "Do you wish to mark any currency as your favourite?(y/n)\n";
+            $favCurrency = $model->favouriteCurrency($list);
+            foreach ($favCurrency as $value) {
+                if (array_key_exists($value, $list) === true) {
+                    echo "$list[$value] is your favourite currency\n";
+                    continue;
+                } else {
+                    echo "\n$value is a unsupported currency code\n when asked to, enter your favourite currency code\nyou can enter multiple currency codes separated by comma\n";
+                    continue;
+                }
+            }
             break;
 
         case 'price';
