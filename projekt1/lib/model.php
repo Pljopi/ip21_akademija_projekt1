@@ -34,6 +34,7 @@ class Model
     {
         $pricePairUrl = sprintf("https://api.coinbase.com/v2/prices/%s-%s/spot", $criptoCurrency, $currency);
         $pricePairUrlApiCall = $this->apiCall($pricePairUrl);
+        var_dump($pricePairUrlApiCall);
         $pricePair = [
             $pricePairUrlApiCall["data"]["base"],
             $pricePairUrlApiCall["data"]["amount"],
@@ -98,7 +99,12 @@ class Model
         if (strtolower(readline()) === 'y' || strtolower(readline()) === 'yes') {
             echo "Enter currency code:\n";
             $input = readline();
-            return explode(",", str_replace(" ", "", ($input)));
+            if (empty($input)) {
+                echo "For this to work you have to enter a currency code, try again.\n";
+                exit;
+            } else {
+                return explode(",", str_replace(" ", "", ($input)));
+            }
         } else {
             echo "Bye!\n";
             exit;
@@ -113,7 +119,7 @@ class Model
     {
         foreach ($favCurrency as $value) {
 
-            if (isset($list[$value])) {
+            if ($list[$value]) {
 
                 $favs[] = $value;
             } else {
@@ -157,6 +163,20 @@ class Model
                 ':TAG' => $TAG,
             ]
         );
+
+    }
+    public function printFav()
+    {
+        $object = new mysql();
+        $pdo = $object->connect();
+        $query = 'SELECT * FROM Favourites';
+        $stmt = $pdo->query($query);
+        $printFav = $stmt->fetchAll();
+        foreach ($printFav as $value) {
+            $storeFav[] = $value['TAG'];
+        }
+
+        return $storeFav;
 
     }
 
