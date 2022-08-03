@@ -11,13 +11,13 @@
  * @var $model
  */
 require_once '/var/www/vendor/autoload.php';
-$loader = new \Twig\Loader\FilesystemLoader('/var/www/lib/views');
+$loader = new \Twig\Loader\FilesystemLoader('/var/www/projekt1/lib/views');
 $twig = new \Twig\Environment($loader, [
 ]);
 
-require_once '/var/www/lib/model.php';
+require_once '/var/www/projekt1/lib/model.php';
 $model = new Model();
-require_once '/var/www/lib/mysql.php';
+require_once '/var/www/projekt1/lib/mysql.php';
 $connect = new mysql();
 /**
  * @return [string]
@@ -45,6 +45,12 @@ try {
             $favCurrency = $model->favouriteCurrency();
             $favTags = implode("\n", $model->parseFav($favCurrency, $list));
             echo "The following currencies: \n" . $favTags . "\nhave been added to your database.\n";
+
+            break;
+
+        case 'search';
+            $printFav = ($model->printFav());
+            echo $twig->render('search.twig', ['printFav' => $printFav]);
 
             break;
 
