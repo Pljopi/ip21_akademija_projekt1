@@ -1,0 +1,63 @@
+/** 
+  *style for the whole page 
+  */
+
+
+body {background-color: rgb(213, 199, 68);  }
+p {color: rgb(0, 0, 0);
+   font-family: "Times New Roman", Times, serif;
+   font-size: 20px;
+   font-style: normal;
+   font-variant: normal;
+   font-weight: normal;
+   line-height: normal;
+   text-align: center;
+   text-indent: 0px;
+   text-transform: none;
+   white-space: normal;
+   widows: 2;
+   word-spacing: 0px;
+   }
+h1   {
+  color: rgb(43, 85, 225);
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  font-size: 50px;
+  text-align: left;
+  text-shadow: 2px 2px 2px rgb(255, 255, 255);
+      } 
+h2   {
+  color: rgb(43, 85, 225);
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  font-size: 30px;
+  text-align: right;
+  text-shadow: 2px 2px 2px rgb(255, 255, 255);
+      }
+li    {
+  color: rgba(233, 15, 15, 0.911);
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  font-size: 20px;
+  text-align: center;
+  text-shadow: 2px 2px 2px rgb(255, 255, 255);
+      }
+/**
+  * The following styles are for the table that displays the supported currencies.
+  */
+.listOfSupportedCurrencies {
+  margin: auto;
+  width: 600px ;
+  border: 30px solid #df54a8;
+  padding: 10px; 
+  text-align: left;
+  font-family: "Comic Sans MS", cursive, sans-serif;
+}
+.listOfFavouriteCurrencies{
+  margin: auto;
+  width: 600px ;
+  border: 30px solid #df54a8;
+  padding: 10px; 
+  text-align: right;
+  font-family: "Comic Sans MS", cursive, sans-serif;
+}
+
+
+

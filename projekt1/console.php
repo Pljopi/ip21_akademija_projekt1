@@ -48,9 +48,9 @@ try {
 
             break;
 
-        case 'search';
+        case 'favourites';
             $printFav = ($model->printFav());
-            echo $twig->render('search.twig', ['printFav' => $printFav]);
+            echo $twig->render('favourites.twig', ['printFav' => $printFav]);
 
             break;
 

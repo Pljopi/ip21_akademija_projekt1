@@ -99,7 +99,8 @@ class Model
         if (strtolower(readline()) === 'y' || strtolower(readline()) === 'yes') {
             echo "Enter currency code:\n";
             $input = readline();
-            if (empty($input)) {
+
+            if (empty($input) && $input !== '0') {
                 echo "For this to work you have to enter a currency code, try again.\n";
                 exit;
             } else {
@@ -118,7 +119,6 @@ class Model
     public function parseFav($favCurrency, $list)
     {
         foreach ($favCurrency as $value) {
-
             if ($list[$value]) {
 
                 $favs[] = $value;
