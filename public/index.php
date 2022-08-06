@@ -5,4 +5,3 @@ $model = new Model();
 $list = $model->getList();
 $printFav = $model->printFav();
 echo ($twig->render('list.html.twig', ['ListOfCurrencies' => $list]));
-echo ($twig->render('favourites.html.twig', ['printFav' => $printFav]));

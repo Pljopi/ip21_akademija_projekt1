@@ -1,32 +1,20 @@
-
-
-<html>
-<head>
-
-
-<link rel="stylesheet" type="text/css" href="style.css">
-
- <meta charset="UTF-8">
-  <meta name="description" content="Criptocurrency price API">
-  <meta name="keywords" content="PHP, Twig, Composer, CSS, HTML, crypto, Currencies, Api">
-  <meta name="author" content="Yo Mama">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
 <body>
-<div class="listOfSupportedCurrencies">
-<h1>List of all supported currencies</h1> <br>
+	<div class="listOfSupportedCurrencies">
+		<h1>List of all supported currencies</h1>
+		<p>
+			The following table lists all the supported currencies</p>
+		<br>
+		<form action="/action_page.php">
+			<label>Browse currencies:</label>
+			<select class="listOfAllCurrencies"></h2><br>
 
-{% for currency in ListOfCurrencies %}
-<ul>
-  <li>{{loop.index}}  .   {{currency}}</li>
+			{% for currency in ListOfCurrencies %}
 
-</ul>  
-{% endfor %}
-</div>
+				<option value="{{currency}}">
+					{{currency}}
+				</option>
+			{% endfor %}
 
-
-{% block Favourites %} {% endblock %}
-
+		</select>
+	</body>
 </body>
-</html>
-
