@@ -1,15 +1,10 @@
-<h1>List of currencies</h1>
-
-<p>The following table lists your favourite currencies.</p>
 
 
 <form action="/action_page.php">
-	<label for="cars">Browse currencies:</label>
-	<select class="listOfFavouriteCurrencies"></h2><br>
-
-	{% for key in printFav %}
-		<option value="{{key}}">
-			{{key}}
-		</option>
-	{% endfor %}
-</select>
+	<label for="cars">Browse your favourite currencies:</label>
+		<select class="listOfFavouriteCurrencies"></h2><br>
+			{% for key in printFav %}
+				<option value="{{key}}">{{key}}</option>
+			{% endfor %}
+		</select>
+</form>

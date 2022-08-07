@@ -1,20 +1,10 @@
-<body>
-	<div class="listOfSupportedCurrencies">
-		<h1>List of all supported currencies</h1>
-		<p>
-			The following table lists all the supported currencies</p>
-		<br>
-		<form action="/action_page.php">
-			<label>Browse currencies:</label>
-			<select class="listOfAllCurrencies"></h2><br>
 
+	
+<form action="/action_page.php">
+	<label>Browse all supported currencies:</label>
+		<select class="listOfAllCurrencies"></h2><br>
 			{% for currency in ListOfCurrencies %}
-
-				<option value="{{currency}}">
-					{{currency}}
-				</option>
+				<option value="{{currency}}">{{currency}}</option>
 			{% endfor %}
-
 		</select>
-	</body>
-</body>
+</form>

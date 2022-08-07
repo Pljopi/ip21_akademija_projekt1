@@ -70,3 +70,18 @@ nav img{
     line-height: 1.5;
 
 }
+
+.listOfAllCurrencies{
+    display: flex;
+    justify-content: space-between;
+    align-items: right;
+    margin: 20 0 20 200;
+}
+
+.listOfFavouriteCurrencies{
+    display: flex;
+    justify-content: space-between;
+    position: sticky;
+    align-items: left;
+    margin: 20 0 20 200;
+}
