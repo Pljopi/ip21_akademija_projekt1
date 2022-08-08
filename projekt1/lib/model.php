@@ -119,7 +119,7 @@ class Model
     public function parseFav($favCurrency, $list)
     {
         foreach ($favCurrency as $value) {
-            if ($list[$value]) {
+            if (array_key_exists($value, $list)) {
 
                 $favs[] = $value;
             } else {
