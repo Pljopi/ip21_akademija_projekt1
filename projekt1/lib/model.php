@@ -34,7 +34,7 @@ class Model
     {
         $pricePairUrl = sprintf("https://api.coinbase.com/v2/prices/%s-%s/spot", $criptoCurrency, $currency);
         $pricePairUrlApiCall = $this->apiCall($pricePairUrl);
-        var_dump($pricePairUrlApiCall);
+
         $pricePair = [
             $pricePairUrlApiCall["data"]["base"],
             $pricePairUrlApiCall["data"]["amount"],

@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @author Andrej C. <andrejcepak@gmail.com>
  */
@@ -22,6 +21,7 @@ $connect = new mysql();
 /**
  * @return [string]
  */
+
 if (!isset($argv[1])) {
 
     echo $twig->render('help.twig', []);
