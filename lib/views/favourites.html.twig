@@ -1,0 +1,13 @@
+
+{% extends "base.html.twig" %}
+{% block FAVOURITES %}
+<div class=favourites>
+<h1>Your favourite currencies are:</h1>
+{% for key in printFav %}
+
+  * {{key}}
+  
+{% endfor %}
+
+</div>
+{% endblock %}
