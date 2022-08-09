@@ -9,7 +9,7 @@
  * @var $twig
  * @var $model
  */
-require_once '.gitignore/vendor/autoload.php';
+require_once 'gitignore/vendor/autoload.php';
 $loader = new \Twig\Loader\FilesystemLoader('lib/views');
 $twig = new \Twig\Environment($loader, [
 ]);
