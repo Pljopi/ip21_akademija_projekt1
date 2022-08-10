@@ -1,0 +1,25 @@
+{% extends "twig/layouts/base.html.twig" %}
+
+{% block LIST %}
+	
+<form action="show_price.php">
+	<label for="CriptoCurrency">Choose a cripto currency:</label>
+	<select id="currency" name="cripto_currency">
+
+		{% for currency in ListOfCurrencies %}
+				<option value={{currency}}>{{currency}}</option>
+		
+		{% endfor %}
+	</select>
+	  <button name="addToFav" value={{currency}}>{{currency}} </button>
+	<label for="Currency">Choose a currency:</label>
+	<select id="currency" name="currency">
+		{% for currency in ListOfCurrencies %}
+		<option value={{currency}}>{{currency}}</option>
+			
+		{% endfor %}
+	</select>
+	<input type="submit" value="Show price">	
+
+</form>
+{% endblock %}

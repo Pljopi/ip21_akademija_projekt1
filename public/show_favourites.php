@@ -1,9 +1,9 @@
 <?php
 
-require_once '../lib/php/bootstrap/bootstrap.php';
+require_once '../lib/bootstrap.php';
 $list = $model->getList();
 $printFav = $model->printFav();
-echo $twig->render('favourites.html.twig',
+echo $twig->render('twig/pages/favourites.html.twig',
     [
         'printFav' => $printFav,
         'ListOfCurrencies' => $list,
