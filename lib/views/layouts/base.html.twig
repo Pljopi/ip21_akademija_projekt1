@@ -2,8 +2,8 @@
 <html>
 <html lang="en"></html>
 
-{% include '/twig/components/head.html.twig' %}
-{% include '/twig/components/navbar.html.twig' %}
+{% include '/components/head.html.twig' %}
+{% include '/components/navbar.html.twig' %}
 
 <div class="text-box">
 {% block FAVOURITES %}
@@ -11,7 +11,7 @@
 <h1>Most accurate crypto prices</h1>
 <p>	Select a currency pair to see the current price.</p>
 
-{% include '/twig/components/action.star.html.twig' %}
+{% include '/components/action.star.html.twig' %}
 {% block LIST %}{% endblock %}
 {% block PRICE %}{% endblock %}
 {% endblock %}

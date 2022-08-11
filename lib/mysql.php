@@ -10,16 +10,21 @@ class mysql
     private $dbname;
     private $charset;
 
+    public function __construct($servername, $username, $password, $dbname, $charset)
+    {
+        $this->servername = $servername;
+        $this->username = $username;
+        $this->password = $password;
+        $this->dbname = $dbname;
+        $this->charset = $charset;
+    }
+
     /**
      * @return [type]
      */
     public function connect()
     {
-        $this->servername = "php_app_db:3306";
-        $this->username = "root";
-        $this->password = "root";
-        $this->dbname = "crypto";
-        $this->charset = "utf8mb4";
+
         try {
             $dsn = "mysql:host=$this->servername;dbname=$this->dbname;charset=$this->charset";
             $pdo = new PDO($dsn, $this->username, $this->password);

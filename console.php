@@ -18,7 +18,7 @@ require_once __DIR__ . '/lib/bootstrap.php';
 
 if (!isset($argv[1])) {
 
-    echo $twig->render('console/help.twig', []);
+    echo $twig->render('components/help.twig', []);
 
     return;
 }
@@ -28,22 +28,29 @@ if (!isset($argv[1])) {
 try {
     switch (strtolower($argv[1])) {
         case 'help';
-            echo $twig->render('console/help.twig', []);
+            echo $twig->render('components/help.twig', []);
             break;
 
         case 'list';
             $list = $model->getList();
-            echo $twig->render('console/list.twig', ['ListOfCurrencies' => $list]);
+
+            echo $twig->render('components/list.twig', ['ListOfCurrencies' => $list]);
             echo "Do you wish to mark any currency as your favourite?(y/n)\n";
-            $favCurrency = $model->favouriteCurrency();
-            $favTags = implode("\n", $model->parseFav($favCurrency, $list));
-            echo "The following currencies: \n" . $favTags . "\nhave been added to your database.\n";
+
+            $favouriteCurrency = favouriteCurrency();
+            $favouriteTags = implode("\n", parseFavourite($favouriteCurrency, $list, $model));
+
+            echo $twig->render('components/added.favourites.twig', ['FavTags' => $favouriteTags]);
 
             break;
 
         case 'favourites';
-            $printFav = ($model->printFav());
-            echo $twig->render('console/favourites.twig', ['printFav' => $printFav]);
+            $printFavourites = ($model->printOrInsertFavourite(null, null));
+            if (empty($printFavourites)) {
+                echo "No favourites added yet\n";
+                return;
+            }
+            echo $twig->render('components/favourites.twig', ['printFavourites' => $printFavourites]);
 
             break;
 
@@ -70,11 +77,11 @@ try {
 
             list($criptoCurrencyTAG, $pairValue, $currencyTAG) = $model->getPrice($criptoCurrency, $currency);
 
-            echo $twig->render('console/price.twig', ['criptoCurrencyTAG' => $criptoCurrencyTAG, 'pairValue' => $pairValue, 'currencyTAG' => $currencyTAG]);
+            echo $twig->render('components/price.twig', ['criptoCurrencyTAG' => $criptoCurrencyTAG, 'pairValue' => $pairValue, 'currencyTAG' => $currencyTAG]);
             break;
 
         default;
-            echo $twig->render('console/help.twig', []);
+            echo $twig->render('components/help.twig', []);
     }
 
 } catch (\Exception$e) {
@@ -89,8 +96,65 @@ try {
 function ifLongOrShort($userInput, $twig)
 {
     if (strlen($userInput) >= 5 or (strlen($userInput) <= 2)) {
-        throw new \Exception($twig->render('console/error.$message.twig', []));
+        throw new \Exception($twig->render('components/error.$message.twig', []));
 
     }
     return true;
+}
+/**
+ * @param mixed $list
+ *
+ * @return [type]
+ */
+function favouriteCurrency()
+{
+    if (strtolower(readline()) === 'y' || strtolower(readline()) === 'yes') {
+        echo "Enter currency code:\n";
+        $input = readline();
+
+        if (empty($input) && $input !== '0') {
+            echo "For this to work you have to enter a currency code, try again.\n";
+            exit;
+        } else {
+            return explode(",", str_replace(" ", "", ($input)));
+        }
+    } else {
+        echo "Bye!\n";
+        exit;
+    }}
+
+/**
+ * @param mixed $favouriteCurrency
+ * @param mixed $list
+ *
+ * @return [type]
+ */
+function parseFavourite($favouriteCurrency, $list, $model)
+{
+    foreach ($favouriteCurrency as $value) {
+        if (array_key_exists($value, $list)) {
+
+            $favs[] = $value;
+        } else {
+            $fail[] = $value;
+        }
+    }
+    if (!empty($fail)) {
+        echo "The following currencie codes do not exist:\n";
+        foreach ($fail as $value) {
+            echo $value . "\n";
+        }
+    }
+    if (!empty($favs)) {
+        foreach ($favs as $value) {
+            $model->printOrInsertFavourite($value, $list[$value]);
+            $favouriteTags[] = $list[$value];
+
+        }
+        return $favouriteTags;
+    } else {
+        echo "No currencies were added to favourites\n";
+        exit;
+    }
+
 }

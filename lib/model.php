@@ -11,7 +11,10 @@ class Model
      * @var null
      */
     private $listOfCurencies = null;
-
+    /**
+     * @var null
+     */
+    private $connect = null;
     /**
      * @return [type]
      */
@@ -111,77 +114,41 @@ class Model
             echo "Bye!\n";
             exit;
         }}
+
     /**
-     * @param mixed $favCurrency
-     * @param mixed $list
+     * @param mixed $ID
+     * @param mixed $TAG
      *
      * @return [type]
      */
-    public function parseFav($favCurrency, $list)
+    public function printOrInsertFavourite($ID, $TAG)
     {
-        foreach ($favCurrency as $value) {
-            if (array_key_exists($value, $list)) {
+        $this->connect = new mysql("php_app_db:3306", "root", "root", "crypto", "utf8mb4");
+        $pdo = $this->connect->connect();
 
-                $favs[] = $value;
-            } else {
-                $fail[] = $value;
-            }
-        }
-        if (!empty($fail)) {
-            echo "The following currencie codes do not exist:\n";
-            foreach ($fail as $value) {
-                echo $value . "\n";
-            }
-        }
-        if (!empty($favs)) {
-            foreach ($favs as $value) {
-                $this->insertFav($value, $list[$value]);
-                $favTags[] = $list[$value];
+        if (isset($TAG)) {
+            $query = 'INSERT INTO Favourites (ID, TAG) VALUES (:ID,:TAG) ON DUPLICATE KEY UPDATE ID=:ID, TAG=:TAG';
+            $stmt = $pdo->prepare($query);
 
-            }
-            return $favTags;
+            return $stmt->execute(
+                [
+                    ':ID' => $ID,
+                    ':TAG' => $TAG,
+                ]
+            );
         } else {
-            echo "No currencies were added to favourites\n";
-            exit;
+            $query = 'SELECT * FROM Favourites';
+            $stmt = $pdo->query($query);
+            $printFavourites = $stmt->fetchAll();
+
+            if (empty($printFavourites)) {
+                return;
+            }
+            foreach ($printFavourites as $value) {
+                $storeFavourites[] = $value['TAG'];
+            }
+            return $storeFavourites;
         }
 
     }
-
-    /**
-     * @param mixed $list
-     *
-     * @return [type]
-     */
-    public function insertFav($ID, $TAG)
-    {
-        $object = new mysql();
-        $pdo = $object->connect();
-        $query = 'INSERT INTO Favourites (ID, TAG) VALUES (:ID,:TAG) ON DUPLICATE KEY UPDATE ID=:ID, TAG=:TAG';
-        $stmt = $pdo->prepare($query);
-        return $stmt->execute(
-            [
-                ':ID' => $ID,
-                ':TAG' => $TAG,
-            ]
-        );
-
-    }
-    /**
-     * @return [type]
-     */
-    public function printFav()
-    {
-        $object = new mysql();
-        $pdo = $object->connect();
-        $query = 'SELECT * FROM Favourites';
-        $stmt = $pdo->query($query);
-        $printFav = $stmt->fetchAll();
-        foreach ($printFav as $value) {
-            $storeFav[] = $value['TAG'];
-        }
-
-        return $storeFav;
-
-    }
-
 }
