@@ -126,7 +126,7 @@ class Model
         $this->connect = new mysql("php_app_db:3306", "root", "root", "crypto", "utf8mb4");
         $pdo = $this->connect->connect();
 
-        if (isset($TAG)) {
+        if (isset($ID) && isset($TAG)) {
             $query = 'INSERT INTO Favourites (ID, TAG) VALUES (:ID,:TAG) ON DUPLICATE KEY UPDATE ID=:ID, TAG=:TAG';
             $stmt = $pdo->prepare($query);
 
