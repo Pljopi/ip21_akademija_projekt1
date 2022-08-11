@@ -1,8 +1,17 @@
 work in progress
-
-{% for currency in ListOfCurrencies %}
-<form action="" method="post">
-  <button name="addToFav" value={{currency}}>{{currency}} </button>
-
-{% endfor %}
-<button onclick="myFunction()">"</button>
+<?php
+function php_func()
+{
+echo " Have a great day";
+}
+php_func();
+?>
+<script>
+function test(){
+$.ajax({url:"echo.php", success:function(result){
+$("div").text(result);}
+})
+} 
+</script>
+<button onclick="test()"> Click </button>
+<div> </div>

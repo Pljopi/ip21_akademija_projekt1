@@ -3,8 +3,7 @@
 /**
  * [Description Model]
  */
-require_once 'mysql.php';
-$connect = new mysql();
+
 class Model
 {
 
@@ -167,6 +166,9 @@ class Model
         );
 
     }
+    /**
+     * @return [type]
+     */
     public function printFav()
     {
         $object = new mysql();
