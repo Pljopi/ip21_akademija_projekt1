@@ -6,26 +6,20 @@
 
 class Model
 {
-
     /**
      * @var null
      */
     private $listOfCurencies = null;
-    /**
-     * @var null
-     */
-    private $connect = null;
+
     /**
      * @return [type]
      */
     public function getList()
     {
-        if ($this->listOfCurencies) {
-            return $this->listOfCurencies;
-        } else {
+        if (!$this->listOfCurencies) {
             $this->listOfCurencies = $this->apiCall("https://api.coingecko.com/api/v3/simple/supported_vs_currencies");
-            return $this->listOfCurencies;
         }
+        return $this->listOfCurencies;
     }
 
     /**
@@ -65,16 +59,13 @@ class Model
             //Checks that the url request has succeded, otherwise it ends execution and echoes message for user //not sure, if I should be catching exceptions in the model part
             if (json_decode($curl_data, true) === null || json_decode($curl_data, true) === false) {
                 throw new \Exception("Api is down\n");
-
             }
             if ($httpCode !== 200) {
                 throw new \Exception("You have entered a unsupported currency pair\n");
-
             }
             curl_close($ch);
 
             return json_decode($curl_data, true);
-
         } catch (\Exception$e) {
             echo $e->getMessage();
             exit;
@@ -86,69 +77,52 @@ class Model
      *
      * @return [type]
      */
-    public function areTheEnterdTagsOnList($currency)
+    public function isCurrencyOnListOfSupported($currency)
     {
         $list = $this->getList();
         return array_search($currency, $list, true) !== false;
-
     }
 
+    private function connect()
+    {
+        $mysql = new mysql("php_app_db:3306", "root", "root", "crypto", "utf8mb4");
+        return $mysql->__construct("php_app_db:3306", "root", "root", "crypto", "utf8mb4");
+    }
     /**
-     * @param mixed $list
+     * @param mixed $id
+     * @param mixed $tag
      *
      * @return [type]
      */
-    public function favouriteCurrency()
+    public function saveFavourite($id, $tag)
     {
-        if (strtolower(readline()) === 'y' || strtolower(readline()) === 'yes') {
-            echo "Enter currency code:\n";
-            $input = readline();
-
-            if (empty($input) && $input !== '0') {
-                echo "For this to work you have to enter a currency code, try again.\n";
-                exit;
-            } else {
-                return explode(",", str_replace(" ", "", ($input)));
-            }
-        } else {
-            echo "Bye!\n";
-            exit;
-        }}
-
-    /**
-     * @param mixed $ID
-     * @param mixed $TAG
-     *
-     * @return [type]
-     */
-    public function printOrInsertFavourite($ID, $TAG)
-    {
-        $this->connect = new mysql("php_app_db:3306", "root", "root", "crypto", "utf8mb4");
-        $pdo = $this->connect->connect();
-
-        if (isset($ID) && isset($TAG)) {
-            $query = 'INSERT INTO Favourites (ID, TAG) VALUES (:ID,:TAG) ON DUPLICATE KEY UPDATE ID=:ID, TAG=:TAG';
+        $pdo = $this->connect();
+        if (isset($id) && isset($tag)) {
+            $query = 'INSERT INTO Favourites (id, tag) VALUES (:id,:tag) ON DUPLICATE KEY UPDATE id=:id, tag=:tag';
             $stmt = $pdo->prepare($query);
 
             return $stmt->execute(
                 [
-                    ':ID' => $ID,
-                    ':TAG' => $TAG,
+                    ':id' => $id,
+                    ':tag' => $tag,
                 ]
             );
-        } else {
-            $query = 'SELECT * FROM Favourites';
-            $stmt = $pdo->query($query);
-            $printFavourites = $stmt->fetchAll();
-
-            if (empty($printFavourites)) {
-                return;
-            }
-            foreach ($printFavourites as $value) {
-                $storeFavourites[] = $value['TAG'];
-            }
-            return $storeFavourites;
         }
+    }
 
+    public function getAllFavourites()
+    {
+        $pdo = $this->connect();
+        $query = 'SELECT * FROM Favourites';
+        $stmt = $pdo->query($query);
+        $getFavourites = $stmt->fetchAll();
+
+        if (empty($getFavourites)) {
+            return;
+        }
+        foreach ($getFavourites as $value) {
+            $storeFavourites[] = $value['tag'];
+        }
+        return $storeFavourites;
     }
 }

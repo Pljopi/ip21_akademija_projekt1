@@ -2,7 +2,7 @@
 
 require_once '../lib/bootstrap.php';
 $list = $model->getList();
-$printFavourites = $model->printOrInsertFavourite(null, null);
+$printFavourites = $model->getAllFavourites();
 echo $twig->render('pages/favourites.html.twig',
     [
         'printFavourites' => $printFavourites,

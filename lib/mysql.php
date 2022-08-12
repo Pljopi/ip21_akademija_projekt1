@@ -17,13 +17,6 @@ class mysql
         $this->password = $password;
         $this->dbname = $dbname;
         $this->charset = $charset;
-    }
-
-    /**
-     * @return [type]
-     */
-    public function connect()
-    {
 
         try {
             $dsn = "mysql:host=$this->servername;dbname=$this->dbname;charset=$this->charset";
@@ -33,7 +26,5 @@ class mysql
         } catch (PDOException $e) {
             echo "Connection failed: " . $e->getMessage();
         }
-
     }
-
 }

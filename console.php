@@ -45,7 +45,7 @@ try {
             break;
 
         case 'favourites';
-            $printFavourites = ($model->printOrInsertFavourite(null, null));
+            $printFavourites = ($model->getAllFavourites(null, null));
             if (empty($printFavourites)) {
                 echo "No favourites added yet\n";
                 return;
@@ -70,7 +70,7 @@ try {
 
             }
             $list = $model->getList();
-            if (!$model->areTheEnterdTagsOnList($currency) || !$model->areTheEnterdTagsOnList($criptoCurrency)) {
+            if (!$model->isCurrencyOnListOfSupported($currency) || !$model->isCurrencyOnListOfSupported($criptoCurrency)) {
                 throw new \Exception("The currency pair you have entered is not on the list of supported currencies\n");
 
             }
@@ -147,7 +147,7 @@ function parseFavourite($favouriteCurrency, $list, $model)
     }
     if (!empty($favs)) {
         foreach ($favs as $value) {
-            $model->printOrInsertFavourite($value, $list[$value]);
+            $model->saveFavourite($value, $list[$value]);
             $favouriteTags[] = $list[$value];
 
         }
