@@ -48,28 +48,25 @@ class Model
      */
     private function apiCall($pricePairOrUrlPair)
     {
-        try {
-            $ch = curl_init();
-            curl_setopt_array($ch, array(
-                CURLOPT_URL => $pricePairOrUrlPair,
-                CURLOPT_RETURNTRANSFER => 1,
-            ));
-            $curl_data = curl_exec($ch);
-            $httpCode = (curl_getinfo($ch, CURLINFO_HTTP_CODE));
-            //Checks that the url request has succeded, otherwise it ends execution and echoes message for user //not sure, if I should be catching exceptions in the model part
-            if (json_decode($curl_data, true) === null || json_decode($curl_data, true) === false) {
-                throw new \Exception("Api is down\n");
-            }
-            if ($httpCode !== 200) {
-                throw new \Exception("You have entered a unsupported currency pair\n");
-            }
-            curl_close($ch);
 
-            return json_decode($curl_data, true);
-        } catch (\Exception$e) {
-            echo $e->getMessage();
-            exit;
+        $ch = curl_init();
+        curl_setopt_array($ch, array(
+            CURLOPT_URL => $pricePairOrUrlPair,
+            CURLOPT_RETURNTRANSFER => 1,
+        ));
+        $curl_data = curl_exec($ch);
+        $httpCode = (curl_getinfo($ch, CURLINFO_HTTP_CODE));
+        //Checks that the url request has succeded, otherwise it ends execution and echoes message for user //not sure, if I should be catching exceptions in the model part
+        if (json_decode($curl_data, true) === null || json_decode($curl_data, true) === false) {
+            throw new \Exception("Api is down\n");
         }
+        if ($httpCode !== 200) {
+            throw new \Exception("You have entered a unsupported currency pair\n");
+        }
+        curl_close($ch);
+
+        return json_decode($curl_data, true);
+
     }
 
     /**

@@ -18,7 +18,7 @@ require_once __DIR__ . '/lib/bootstrap.php';
 
 if (!isset($argv[1])) {
 
-    echo $twig->render('components/help.twig', []);
+    echo $twig->render('pages/help.twig', []);
 
     return;
 }
@@ -28,19 +28,19 @@ if (!isset($argv[1])) {
 try {
     switch (strtolower($argv[1])) {
         case 'help';
-            echo $twig->render('components/help.twig', []);
+            echo $twig->render('pages/help.twig', []);
             break;
 
         case 'list';
             $list = $model->getList();
 
-            echo $twig->render('components/list.twig', ['ListOfCurrencies' => $list]);
+            echo $twig->render('pages/list.twig', ['ListOfCurrencies' => $list]);
             echo "Do you wish to mark any currency as your favourite?(y/n)\n";
 
             $favouriteCurrency = favouriteCurrency();
             $favouriteTags = implode("\n", parseFavourite($favouriteCurrency, $list, $model));
 
-            echo $twig->render('components/added.favourites.twig', ['FavTags' => $favouriteTags]);
+            echo $twig->render('pages/added.favourites.twig', ['FavTags' => $favouriteTags]);
 
             break;
 
@@ -50,7 +50,7 @@ try {
                 echo "No favourites added yet\n";
                 return;
             }
-            echo $twig->render('components/favourites.twig', ['printFavourites' => $printFavourites]);
+            echo $twig->render('pages/favourites.twig', ['printFavourites' => $printFavourites]);
 
             break;
 
@@ -77,11 +77,11 @@ try {
 
             list($criptoCurrencyTAG, $pairValue, $currencyTAG) = $model->getPrice($criptoCurrency, $currency);
 
-            echo $twig->render('components/price.twig', ['criptoCurrencyTAG' => $criptoCurrencyTAG, 'pairValue' => $pairValue, 'currencyTAG' => $currencyTAG]);
+            echo $twig->render('pages/price.twig', ['criptoCurrencyTAG' => $criptoCurrencyTAG, 'pairValue' => $pairValue, 'currencyTAG' => $currencyTAG]);
             break;
 
         default;
-            echo $twig->render('components/help.twig', []);
+            echo $twig->render('pages/help.twig', []);
     }
 
 } catch (\Exception$e) {
@@ -96,7 +96,7 @@ try {
 function ifLongOrShort($userInput, $twig)
 {
     if (strlen($userInput) >= 5 or (strlen($userInput) <= 2)) {
-        throw new \Exception($twig->render('components/error.$message.twig', []));
+        throw new \Exception($twig->render('pages/error.$message.twig', []));
 
     }
     return true;
