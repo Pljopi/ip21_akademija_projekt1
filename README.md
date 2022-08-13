@@ -1,5 +1,8 @@
 
 ```
+Edit the .env.example file into .env and input your own server data!!!
+
+
 ip21_akademija_projekt1
 ├─ .gitignore
 ├─ Dockerfile
