@@ -80,11 +80,6 @@ class Model
         return array_search($currency, $list, true) !== false;
     }
 
-    private function connect()
-    {
-        $mysql = new mysql("php_app_db:3306", "root", "root", "crypto", "utf8mb4");
-        return $mysql->__construct("php_app_db:3306", "root", "root", "crypto", "utf8mb4");
-    }
     /**
      * @param mixed $id
      * @param mixed $tag
@@ -93,26 +88,16 @@ class Model
      */
     public function saveFavourite($id, $tag)
     {
-        $pdo = $this->connect();
+        $mysql = new Mysql;
         if (isset($id) && isset($tag)) {
-            $query = 'INSERT INTO Favourites (id, tag) VALUES (:id,:tag) ON DUPLICATE KEY UPDATE id=:id, tag=:tag';
-            $stmt = $pdo->prepare($query);
-
-            return $stmt->execute(
-                [
-                    ':id' => $id,
-                    ':tag' => $tag,
-                ]
-            );
+            return $mysql->insertData($id, $tag);
         }
     }
 
     public function getAllFavourites()
     {
-        $pdo = $this->connect();
-        $query = 'SELECT * FROM Favourites';
-        $stmt = $pdo->query($query);
-        $getFavourites = $stmt->fetchAll();
+        $mysql = new Mysql;
+        $getFavourites = $mysql->getData();
 
         if (empty($getFavourites)) {
             return;

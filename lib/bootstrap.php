@@ -1,6 +1,7 @@
 <?php
 
 require_once __DIR__ . '/mysql.php';
+$mysql = new mysql();
 require_once __DIR__ . '/model.php';
 $model = new Model();
 require_once __DIR__ . '/../vendor/autoload.php';

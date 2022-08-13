@@ -45,7 +45,8 @@ try {
             break;
 
         case 'favourites';
-            $printFavourites = ($model->getAllFavourites(null, null));
+            $printFavourites = ($model->getAllFavourites());
+
             if (empty($printFavourites)) {
                 echo "No favourites added yet\n";
                 return;
