@@ -46,7 +46,7 @@ class mysql
         $query = 'INSERT INTO Favourites (id, tag) VALUES (:id,:tag) ON DUPLICATE KEY UPDATE id=:id, tag=:tag';
         $stmt = $this->pdo->prepare($query);
 
-        return $stmt->execute(
+        $stmt->execute(
             [
                 ':id' => $id,
                 ':tag' => $tag,

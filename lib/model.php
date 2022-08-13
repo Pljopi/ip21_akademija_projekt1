@@ -89,8 +89,10 @@ class Model
     public function saveFavourite($id, $tag)
     {
         $mysql = new Mysql;
-        if (isset($id) && isset($tag)) {
-            return $mysql->insertData($id, $tag);
+        if (!isset($id) || !isset($tag)) {
+            throw new \Exception("Somehow, something went wrong\n");
+        } else {
+            $mysql->insertData($id, $tag);
         }
     }
 

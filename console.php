@@ -153,9 +153,6 @@ function parseFavourite($favouriteCurrency, $list, $model)
 
         }
         return $favouriteTags;
-    } else {
-        echo "No currencies were added to favourites\n";
-        exit;
     }
 
 }
