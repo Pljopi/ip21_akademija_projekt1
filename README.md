@@ -1,20 +1,6 @@
 
 ```
 ip21_akademija_projekt1
-├─ .env
-│  │  ├─ info
-│  │  └─ pack
-│  │     ├─ pack-bd8fc767e90387e8277a75d124735b43b86cbe32.idx
-│  │     └─ pack-bd8fc767e90387e8277a75d124735b43b86cbe32.pack
-│  ├─ packed-refs
-│  └─ refs
-│     ├─ heads
-│     │  └─ main
-│     ├─ remotes
-│     │  └─ origin
-│     │     ├─ HEAD
-│     │     └─ main
-│     └─ tags
 ├─ .gitignore
 ├─ Dockerfile
 ├─ composer.json
