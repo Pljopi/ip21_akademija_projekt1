@@ -1,26 +1,15 @@
-*{
-    margin: 0;
-    padding: 0%;
-    font-family: 'Roboto', sans-serif;
 
-}
 .header{
     width: 100%;
     height: 100%;
-    background-image:linear-gradient(rgba(4,9,30,0.7),rgba(4,9,30,0.7)),url(/images/background.jpg);
+    background-image:linear-gradient(rgb(174, 195, 235),rgba(4,9,30,0.7)),url(/images/background.jpg);
     background-position: center;
     background-size: cover;
     position: relative;
 }
-nav{
-    display: flex;
-    padding: 2% 6;
-    justify-content: space-between;
-    align-self: center;
 
-}
 nav img{
-    width: 150px;
+    width: 250px;
   
 }
 .nav-links{
@@ -36,30 +25,31 @@ nav img{
  .nav-links ul li a{
     color: #fff;
     text-decoration: none;
+    font-size: 1.2em;
+    font-weight: bold;
+    transition: 1s;
     font-size: 13px;
+   
 }
-.nav-links ul li::after{
-    content: '';
-    width: 0%;
-    height: 2px;
-    background: #f44336;
-    display:block;
-    margin: auto; 
-    transition: width 0.4s ease-in-out;
+.nav-links ul li a:hover{
+    color: gold;
+    padding: auto;
+    border-bottom: 2px solid gold;   
+    transition: 0,5s;
+
 }
-.nav-links ul li:hover::after{
-    width: 100%;
-}
+
+
 .text-box{
     position: absolute;
     color: #fff;
-    top: 50%;
+    top: 40%;
     left: 50%;
     transform: translate(-50%,-50%);
     text-align: center;
 }
 .text-box h1{
-    font-size: 62px;
+    font-size: 65px;
  
 }
 .text-box p{
@@ -70,45 +60,111 @@ nav img{
     line-height: 1.5;
 
 }
+.content{
+    border: 1px solid gold;
+    outline: none;
+      color: #fff;
+    font-size: 14px;
+    padding: 10px 20px;
+    border-radius: 10px;
+  }
+.content h1{
+    font-size: 35px;
+} 
+.content h2{
+    font-size: 20px;
 
-.listOfAllCurrencies{
-    display: flex;
-    justify-content: space-between;
-    align-items: auto;
-    margin: 20 0 20 200;
-    float: sidebyside;
-    padding: 5px;
-    width: 50%;
 }
 
-.listOfFavouriteCurrencies{
-    display: flex;
-    justify-content: space-between;
-    position: relative;
-    align-items: auto;
-    margin: 20 0 20 200;
-    float: center;
-    padding: 5px;
-}
-.container{
-    display: flex;
-    justify-content: space-between;
-    align-items: auto;
-      margin: 0 auto;
-    float: center;
-    padding: 5px;
+.crypto{
     width: 100%;
-    border: 1px solid #fff;
+    height: 100%;
+    background-blend-mode: hue;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
 }
-.container h1{
-    font-size: 45px;
-    color: #fff;
-    text-align: center;
 
- 
-}
+
 .favourites{
     align-items: auto;
     float: center;
-   
+ }
+.favourites h1{
+
+    font-size: 35px;
 }
+.favourites h2{
+    font-size: 20px;
+
+  
+}
+  
+  label input[type="checkbox"] {
+    display: none;
+  }
+  
+  .custom-checkbox {
+    margin-left: 2em;
+    position: relative;
+    cursor: pointer;
+  }
+  
+  .custom-checkbox .glyphicon {
+    color: gold;
+    position: absolute;
+    top: 0.4em;
+    left: -1.25em;
+    font-size: 0.75em;
+  }
+  
+  .custom-checkbox .glyphicon-star-empty {
+    color: #fff;
+  }
+  
+  .custom-checkbox .glyphicon-star {
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+  }
+  
+  .custom-checkbox:hover .glyphicon-star{
+    opacity: 0.5;
+  }
+  
+  .custom-checkbox input[type="checkbox"]:checked ~ .glyphicon-star {
+    opacity: 1;
+  }
+  
+
+  .custom-checkbox2 {
+    margin-left: 2em;
+    position: relative;
+    cursor: pointer;
+  }
+  
+  .custom-checkbox2 .glyphicon {
+    color: goldenrod;
+    position: absolute;
+    top: 0.4em;
+    left: -1.25em;
+    font-size: 0.75em;
+  }
+  
+  .custom-checkbox2 .glyphicon-star-empty {
+    color: #fff;
+  }
+  
+  .custom-checkbox2 .glyphicon-star {
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+  }
+  
+  .custom-checkbox2:hover .glyphicon-star{
+    opacity: 0.5;
+  }
+  
+  .custom-checkbox2 input[type="checkbox"]:checked ~ .glyphicon-star {
+    opacity: 1;
+  }
+  

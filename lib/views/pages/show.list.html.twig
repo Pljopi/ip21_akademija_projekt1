@@ -1,0 +1,11 @@
+{% extends 'layouts/base.html.twig' %}
+
+
+{% block CONTENT %}
+
+{% for currency in ListOfCurrencies %}
+{{loop.index0}}.{{currency}} 
+    
+{% endfor %}
+
+{% endblock %}

@@ -2,12 +2,16 @@
 {% extends "layouts/base.html.twig" %}
 
 {% block CONTENT %}
-<div class=favourites>
-  <h1>Your favourite currencies are:</h1>
-{% for key in printFavourites %}
 
-  * {{key}}
-  
-{% endfor %}
+<div class=favourites>
+  <h1> 
+    Your favourite currencies are: 
+  </h1>
+  <h2>
+    {% for key in printFavourites %}
+    * {{key}}
+    {% endfor %}
+  </h2>
 </div>
+
 {% endblock %}

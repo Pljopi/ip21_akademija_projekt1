@@ -56,7 +56,7 @@ class Model
         ));
         $curl_data = curl_exec($ch);
         $httpCode = (curl_getinfo($ch, CURLINFO_HTTP_CODE));
-        //Checks that the url request has succeded, otherwise it ends execution and echoes message for user //not sure, if I should be catching exceptions in the model part
+
         if (json_decode($curl_data, true) === null || json_decode($curl_data, true) === false) {
             throw new \Exception("Api is down\n");
         }
@@ -96,6 +96,9 @@ class Model
         }
     }
 
+    /**
+     * @return [type]
+     */
     public function getAllFavourites()
     {
         $mysql = new Mysql;

@@ -1,24 +1,47 @@
+
+
 {% extends "layouts/base.html.twig" %}
 
 {% block CONTENT %}
-	
+
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
+
+	<p>	Select a currency pair to see the current price.</p>
 <form action="show_price.php">
-	<label for="CriptoCurrency">Choose a cripto currency:</label>
-	<select id="currency" name="cripto_currency">
+	<div>
+		<label  for="CriptoCurrency">Choose a cripto currency:</label>
+			<select id="currency" name="cripto_currency">
 
-		{% for currency in ListOfCurrencies %}
-			<option value={{currency}}>{{currency}}</option>
-		
-		{% endfor %}
-	</select>
-	<label for="Currency">Choose a currency:</label>
-	<select id="currency" name="currency">
-		{% for currency in ListOfCurrencies %}
-		<option value={{currency}}>{{currency}}</option>
-			
-		{% endfor %}
-	</select>
+				{% for currency in ListOfCurrencies %}
+				<option value={{currency}}>{{currency}}</option>
+				{% endfor %}
+			</select>
+
+		<label for="id-of-input" class="custom-checkbox2">
+  		<input type="checkbox" id="id-of-input"/>
+  			<i class="glyphicon glyphicon-star-empty"></i>
+  			<i class="glyphicon glyphicon-star"></i>
+  			<span>Add as favorite</span>
+		</label>
+	</div>
+	
+	<div>
+		<label for="Currency">Choose a currency:</label>
+			<select id="currency" name="currency">
+	
+				{% for currency in ListOfCurrencies %}
+				<option value={{currency}}>{{currency}}</option>
+				{% endfor %}
+			</select>
+
+		<label for="id-of-input2" class="custom-checkbox">
+  		<input type="checkbox" id="id-of-input2"/>
+  			<i class="glyphicon glyphicon-star-empty"></i>
+  			<i class="glyphicon glyphicon-star"></i>
+  			<span>Add as favorite</span>
+		</label>
+	</div>
 	<input type="submit" value="Show price">	
-
+	
 </form>
 {% endblock %}
