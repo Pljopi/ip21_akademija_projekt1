@@ -37,20 +37,16 @@ try {
             echo $twig->render('pages/list.twig', ['ListOfCurrencies' => $list]);
             echo "Do you wish to mark any currency as your favourite?(y/n)\n";
 
-            $favouriteCurrency = favouriteCurrency();
-            $favouriteTags = implode("\n", parseFavourite($favouriteCurrency, $list, $model));
-
+            $favouriteCurrency = getFavoriteCurrencyFromUser();
+            $parsedFavourite = parseFavourite($favouriteCurrency, $list, $model);
+            $favouriteTags = implode("\n", $parsedFavourite);
+            $model->saveFavourite($parsedFavourite, $list);
             echo $twig->render('pages/added.favourites.twig', ['FavTags' => $favouriteTags]);
 
             break;
 
         case 'favourites';
             $printFavourites = ($model->getAllFavourites());
-
-            if (empty($printFavourites)) {
-                echo "No favourites added yet\n";
-                return;
-            }
             echo $twig->render('pages/favourites.twig', ['printFavourites' => $printFavourites]);
 
             break;
@@ -60,7 +56,8 @@ try {
             if (!isset($argv[2]) || !isset($argv[3])) {
                 throw new \Exception("After price, enter criptoCurrency and currency TAG\n");
 
-            } else if (ifLongOrShort($argv[2], $twig) && ifLongOrShort($argv[3], $twig)) {
+            }
+            if (isLenghtBetween($argv[2], $twig) && isLenghtBetween($argv[3], $twig)) {
 
                 $criptoCurrency = strtolower($argv[2]);
                 $currency = strtolower($argv[3]);
@@ -70,7 +67,7 @@ try {
                 throw new \Exception("You have entered two of the same currencies, input different currencies\n");
 
             }
-            $list = $model->getList();
+
             if (!$model->isCurrencyOnListOfSupported($currency) || !$model->isCurrencyOnListOfSupported($criptoCurrency)) {
                 throw new \Exception("The currency pair you have entered is not on the list of supported currencies\n");
 
@@ -94,20 +91,21 @@ try {
  *
  * @return [type]
  */
-function ifLongOrShort($userInput, $twig)
+function isLenghtBetween(string $str, $twig, int $min = 2, int $max = 5): bool
 {
-    if (strlen($userInput) >= 5 or (strlen($userInput) <= 2)) {
-        throw new \Exception($twig->render('pages/error.$message.twig', []));
-
+    if (strlen($str) >= $min && strlen($str) <= $max) {
+        return true;
     }
-    return true;
+    throw new \Exception($twig->render('pages/error.$message.twig', []));
+    return false;
 }
+
 /**
  * @param mixed $list
  *
  * @return [type]
  */
-function favouriteCurrency()
+function getFavoriteCurrencyFromUser()
 {
     if (strtolower(readline()) === 'y' || strtolower(readline()) === 'yes') {
         echo "Enter currency code:\n";
@@ -115,6 +113,9 @@ function favouriteCurrency()
 
         if (empty($input) && $input !== '0') {
             echo "For this to work you have to enter a currency code, try again.\n";
+            exit;
+        } else if (!is_numeric($input)) {
+            echo "You have entered a currency tag, enter the curreny code, try again.\n";
             exit;
         } else {
             return explode(",", str_replace(" ", "", ($input)));
@@ -130,11 +131,10 @@ function favouriteCurrency()
  *
  * @return [type]
  */
-function parseFavourite($favouriteCurrency, $list, $model)
+function parseFavourite($favouriteCurrency, $list)
 {
     foreach ($favouriteCurrency as $value) {
         if (array_key_exists($value, $list)) {
-
             $favs[] = $value;
         } else {
             $fail[] = $value;
@@ -148,9 +148,7 @@ function parseFavourite($favouriteCurrency, $list, $model)
     }
     if (!empty($favs)) {
         foreach ($favs as $value) {
-            $model->saveFavourite($value, $list[$value]);
             $favouriteTags[] = $list[$value];
-
         }
         return $favouriteTags;
     }

@@ -2,10 +2,18 @@
 
 
 {% block CONTENT %}
-
-{% for currency in ListOfCurrencies %}
-{{loop.index0}}.{{currency}} 
-    
-{% endfor %}
-
+	<div class="ListOfCurrencies">
+		<h1>List of currencies</h1>
+		<p>Click on a currency to add it to your favourite currenices</p>
+		<form method="post">
+			{% for currency in ListOfCurrencies %}
+				<input type="submit" name="currency" class="button" value="{{currency}}"/>
+			{% endfor %}
+		</form>
+	</div>
+	<script>
+		if (window.history.replaceState) {
+window.history.replaceState(null, null, window.location.href);
+}
+	</script>
 {% endblock %}

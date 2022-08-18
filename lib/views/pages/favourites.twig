@@ -1,12 +1,15 @@
 {% extends 'layouts/console.twig'%}
+
 {% block smthin %}
 
-{% for key in printFavourites %}
+	{% if printFavourites is empty %}
 
-  * {{key}}
-  
-{% endfor %}
+		You have yet to pick any favourite currencies.
+	{% endif %}
+
+	{% for key in printFavourites %}
+		*
+		{{key}}
+	{% endfor %}
 
 {% endblock %}
-
-

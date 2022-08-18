@@ -86,14 +86,15 @@ class Model
      *
      * @return [type]
      */
-    public function saveFavourite($id, $tag)
+    public function saveFavourite($parsedFavourite, $list)
     {
         $mysql = new Mysql;
-        if (!isset($id) || !isset($tag)) {
-            throw new \Exception("Somehow, something went wrong\n");
-        } else {
-            $mysql->insertData($id, $tag);
+        foreach ($parsedFavourite as $tag) {
+            $key = array_search($tag, $list);
         }
+
+        $mysql->insertFavorites($key, $list[$key]);
+
     }
 
     /**
@@ -102,7 +103,7 @@ class Model
     public function getAllFavourites()
     {
         $mysql = new Mysql;
-        $getFavourites = $mysql->getData();
+        $getFavourites = $mysql->getFavorites();
 
         if (empty($getFavourites)) {
             return;
@@ -110,6 +111,14 @@ class Model
         foreach ($getFavourites as $value) {
             $storeFavourites[] = $value['tag'];
         }
+
         return $storeFavourites;
+
+    }
+
+    public function removeFromFavourites($tag)
+    {
+        $mysql = new Mysql;
+        $mysql->removeFavorites($tag);
     }
 }

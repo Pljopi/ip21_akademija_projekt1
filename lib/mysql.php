@@ -30,10 +30,10 @@ class mysql
             $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         } catch (PDOException $e) {
-            echo "Connection failed: " . $e->getMessage();
+            throw new Exception("Database connection failed\n");
         }
     }
-    public function getData()
+    public function getFavorites()
     {
 
         $query = 'SELECT * FROM Favourites';
@@ -41,7 +41,7 @@ class mysql
         $gotData = $stmt->fetchAll();
         return $gotData;
     }
-    public function insertData($id, $tag)
+    public function insertFavorites($id, $tag)
     {
         $query = 'INSERT INTO Favourites (id, tag) VALUES (:id,:tag) ON DUPLICATE KEY UPDATE id=:id, tag=:tag';
         $stmt = $this->pdo->prepare($query);
@@ -49,6 +49,16 @@ class mysql
         $stmt->execute(
             [
                 ':id' => $id,
+                ':tag' => $tag,
+            ]
+        );
+    }
+    public function removeFavorites($tag)
+    {
+        $query = 'DELETE FROM Favourites WHERE tag = :tag';
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute(
+            [
                 ':tag' => $tag,
             ]
         );

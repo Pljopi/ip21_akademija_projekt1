@@ -1,45 +1,42 @@
-
+<!DOCTYPE html>
 <html>
 
-<head>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>	Crypto cene</title>
-	<link rel="stylesheet" type="text/css" href="/css/style.css">
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
-</head>
-<body>
-	<section class="header">
-		<nav>
-			<a href="base.php"><img src="/images/logo.png" ></a>
-			<div class ="nav-links"> 
-            <ul> 
-				<li><a href="base.php">HOME</a></li>
-				<li><a href="">HELP</a></li>
-				<li><a href="show.list.php">LIST</a></li>
-				<li><a href="show_favourites.php">FAVOURITES</a></li>
-				<li><a href="">PRICE</a></li>
-    		</ul>
-		    </div>
-		</nav>
-	</section>
-</body>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>
+			Crypto cene
+		</title>
+		<link rel="stylesheet" type="text/css" href="/css/style.css">
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+	</head>
+	<body>
+		<section class="header">
+			<nav>
+				<a href="base.php"><img src="/images/logo.png"></a>
+				<div class="nav-links">
+					<ul>
+						<li><a href="base.php">HOME</a></li>
+						<li><a href="">HELP</a></li>
+						<li><a href="show_list.php">LIST</a></li>
+						<li><a href="show_favourites.php">FAVOURITES</a></li>
+						<li><a href="">PRICE</a></li>
+					</ul>
+				</div>
+			</nav</section>
+		</body>
 
+		<div class="text-box">
+			<h1>Most accurate crypto prices</h1>
 
-<div class="text-box">
-	<h1>Most accurate crypto prices</h1>
-	
-		{% block CONTENT %}
-		{% endblock %}
-	
+			{% block CONTENT %}{% endblock %}
 
-	
-	<div class="footer">
-		<footer>
-			<p>&copy; Crypto cene 2022</p>
-		</footer>
-	</div>
-</div>
-
+			<div class="footer">
+				<footer>
+					<p>&copy Crypto cene 2022</p>
+				</footer>
+			</div>
+		</div>
+	</body>
 </html>

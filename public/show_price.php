@@ -4,11 +4,12 @@ $criptoCurrency = $_GET['cripto_currency'];
 $currency = $_GET['currency'];
 
 $list = $model->getList();
+
 $printFavourites = $model->getAllFavourites();
 $key = array_search($criptoCurrency, $list);
 $key2 = array_search($currency, $list);
-$model->saveFavourite($key, $list[$key]);
-$model->saveFavourite($key2, $list[$key2]);
+$mysql->insertFavorites($key, $list[$key]);
+$mysql->insertFavorites($key2, $list[$key2]);
 
 try {
     list($criptoCurrencyTAG, $pairValue, $currencyTAG) = $model->getPrice($criptoCurrency, $currency);
