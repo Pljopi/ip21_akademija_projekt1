@@ -6,6 +6,12 @@
 
 class Model
 {
+    private $mysql;
+
+    public function __construct()
+    {
+        $this->mysql = new Mysql;
+    }
     /**
      * @var null
      */
@@ -88,12 +94,12 @@ class Model
      */
     public function saveFavourite($parsedFavourite, $list)
     {
-        $mysql = new Mysql;
+
         foreach ($parsedFavourite as $tag) {
             $key = array_search($tag, $list);
         }
 
-        $mysql->insertFavorites($key, $list[$key]);
+        $this->mysql->insertFavorites($key, $list[$key]);
 
     }
 
@@ -102,8 +108,8 @@ class Model
      */
     public function getAllFavourites()
     {
-        $mysql = new Mysql;
-        $getFavourites = $mysql->getFavorites();
+
+        $getFavourites = $this->mysql->getFavorites();
 
         if (empty($getFavourites)) {
             return;
@@ -118,7 +124,6 @@ class Model
 
     public function removeFromFavourites($tag)
     {
-        $mysql = new Mysql;
-        $mysql->removeFavorites($tag);
+        $this->mysql->removeFavorites($tag);
     }
 }

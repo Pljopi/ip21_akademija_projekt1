@@ -35,11 +35,12 @@ try {
             $list = $model->getList();
 
             echo $twig->render('pages/list.twig', ['ListOfCurrencies' => $list]);
-            echo "Do you wish to mark any currency as your favourite?(y/n)\n";
 
             $favouriteCurrency = getFavoriteCurrencyFromUser();
             $parsedFavourite = parseFavourite($favouriteCurrency, $list, $model);
+
             $favouriteTags = implode("\n", $parsedFavourite);
+
             $model->saveFavourite($parsedFavourite, $list);
             echo $twig->render('pages/added.favourites.twig', ['FavTags' => $favouriteTags]);
 
@@ -106,16 +107,13 @@ function isLenghtBetween(string $str, $twig, int $min = 2, int $max = 5): bool
  * @return [type]
  */
 function getFavoriteCurrencyFromUser()
-{
+{echo "Do you wish to mark any currency as your favourite?(y/n)\n";
     if (strtolower(readline()) === 'y' || strtolower(readline()) === 'yes') {
         echo "Enter currency code:\n";
         $input = readline();
 
         if (empty($input) && $input !== '0') {
             echo "For this to work you have to enter a currency code, try again.\n";
-            exit;
-        } else if (!is_numeric($input)) {
-            echo "You have entered a currency tag, enter the curreny code, try again.\n";
             exit;
         } else {
             return explode(",", str_replace(" ", "", ($input)));
@@ -151,6 +149,10 @@ function parseFavourite($favouriteCurrency, $list)
             $favouriteTags[] = $list[$value];
         }
         return $favouriteTags;
+    }
+    if (empty($favs)) {
+        echo " You have not entered any valid currency codes, exiting...\n";
+        exit;
     }
 
 }

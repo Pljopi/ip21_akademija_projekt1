@@ -1,9 +1,8 @@
-
 {% extends 'layouts/console.twig'%}
-{% block smthin %}
-{% for currency in ListOfCurrencies %}
+{% block CONTENT %}
+	{% for currency in ListOfCurrencies %}
 
-  {{loop.index0}}.{{currency}}
-  
-{% endfor %}
+		{{loop.index0}}.{{currency}}
+
+	{% endfor %}
 {% endblock %}
