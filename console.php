@@ -12,10 +12,6 @@
 
 require_once __DIR__ . '/lib/bootstrap.php';
 
-/**
- * @return [string]
- */
-
 if (!isset($argv[1])) {
 
     echo $twig->render('pages/help.twig', []);
@@ -87,10 +83,13 @@ try {
     echo $e->getMessage();
 }
 
-/**!
- * @param mixed $userInput
+/**
+ * @param string $str
+ * @param mixed $twig
+ * @param int $min
+ * @param int $max
  *
- * @return [type]
+ * @return bool
  */
 function isLenghtBetween(string $str, $twig, int $min = 2, int $max = 5): bool
 {
@@ -102,9 +101,8 @@ function isLenghtBetween(string $str, $twig, int $min = 2, int $max = 5): bool
 }
 
 /**
- * @param mixed $list
- *
  * @return [type]
+ * @param mixed readline()
  */
 function getFavoriteCurrencyFromUser()
 {echo "Do you wish to mark any currency as your favourite?(y/n)\n";
@@ -125,7 +123,7 @@ function getFavoriteCurrencyFromUser()
 
 /**
  * @param mixed $favouriteCurrency
- * @param mixed $list
+ * @param array $list
  *
  * @return [type]
  */

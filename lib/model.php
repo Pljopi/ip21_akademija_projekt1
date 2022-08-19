@@ -12,14 +12,13 @@ class Model
     {
         $this->mysql = new Mysql;
     }
-    /**
-     * @var null
-     */
+
     private $listOfCurencies = null;
 
     /**
-     * @return [type]
+     * @return array
      */
+
     public function getList()
     {
         if (!$this->listOfCurencies) {
@@ -29,10 +28,10 @@ class Model
     }
 
     /**
-     * @param mixed $criptoCurrency
-     * @param mixed $currency
+     * @param string $criptoCurrency
+     * @param string $currency
      *
-     * @return [type]
+     * @return array
      */
     public function getPrice($criptoCurrency, $currency)
     {
@@ -50,7 +49,7 @@ class Model
     /**
      * @param mixed $pricePairOrUrlPair
      *
-     * @return [type]
+     * @return array
      */
     private function apiCall($pricePairOrUrlPair)
     {
@@ -87,10 +86,9 @@ class Model
     }
 
     /**
-     * @param mixed $id
-     * @param mixed $tag
+     * @param int $id
+     * @param string $tag
      *
-     * @return [type]
      */
     public function saveFavourite($parsedFavourite, $list)
     {
@@ -103,9 +101,6 @@ class Model
 
     }
 
-    /**
-     * @return [type]
-     */
     public function getAllFavourites()
     {
 
