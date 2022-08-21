@@ -1,0 +1,11 @@
+{% extends "layouts/base.html.twig" %}
+
+{% block LOGINOUT %}
+	You are logged in as
+	{{ user }}
+	{{ session.get('user') }}
+	<li>
+		<a href="logout.inc.php">LOGOUT</a>
+	</li>
+
+{% endblock %}

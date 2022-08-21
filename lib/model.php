@@ -10,7 +10,13 @@ class Model
 
     public function __construct()
     {
-        $this->mysql = new Mysql;
+        $this->mysql = new Mysql(
+            $this->servername = getenv('DB_SERVERNAME'),
+            $this->username = getenv('DB_USERNAME'),
+            $this->password = getenv('DB_PASSWORD'),
+            $this->dbname = getenv('DB_NAME'),
+            $this->charset = getenv('DB_CHARSET')
+        );
     }
 
     private $listOfCurencies = null;
@@ -66,7 +72,7 @@ class Model
             throw new \Exception("Api is down\n");
         }
         if ($httpCode !== 200) {
-            throw new \Exception("You have entered a unsupported currency pair\n");
+            throw new \Exception("You have entered a unsupported currency pair\n WAT?=");
         }
         curl_close($ch);
 
@@ -95,9 +101,8 @@ class Model
 
         foreach ($parsedFavourite as $tag) {
             $key = array_search($tag, $list);
+            $this->mysql->insertFavorites($key, $list[$key]);
         }
-
-        $this->mysql->insertFavorites($key, $list[$key]);
 
     }
 

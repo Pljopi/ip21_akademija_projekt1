@@ -1,27 +1,25 @@
-
 {% extends "layouts/base.html.twig" %}
 
 {% block CONTENT %}
 
-<div class=favourites>
-  <h1> 
-    Your favourite currencies are: 
-  </h1>
-  <p>Click on a currency to remove it from your favourites</p>
-   <form method="post">
-  <h2>
-     
-    {% for key in printFavourites %}
-    <input type="submit" name="favourite"  
-     class="button" onClick="<script>window.location.reload();</script>" value="{{key}}" />
-    {% endfor %}
-  </h2>
-</div>
+	<div class="favourites">
+		<h1>
+			Your favourite currencies are:
+		</h1>
+		<p>Click on a currency to remove it from your favourites</p>
+		<form method="post">
+			<h2>
 
-<script>
-if ( window.history.replaceState ) {
-  window.history.replaceState( null, null, window.location.href );
+				{% for key in printFavourites %}
+					<input type="submit" name="favourite" class="button" onclick="<script>window.location.reload();</script>" value="{{key}}"/>
+				{% endfor %}
+			</h2>
+		</div>
+
+		<script>
+			if (window.history.replaceState) {
+window.history.replaceState(null, null, window.location.href);
 }
-</script>
+		</script>
 
-{% endblock %}
+	{% endblock %}

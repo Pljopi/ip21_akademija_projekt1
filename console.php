@@ -37,8 +37,8 @@ try {
 
             $favouriteTags = implode("\n", $parsedFavourite);
 
+            echo $twig->render('pages/added.favourites.twig', ['favouriteTags' => $favouriteTags]);
             $model->saveFavourite($parsedFavourite, $list);
-            echo $twig->render('pages/added.favourites.twig', ['FavTags' => $favouriteTags]);
 
             break;
 
@@ -114,6 +114,7 @@ function getFavoriteCurrencyFromUser()
             echo "For this to work you have to enter a currency code, try again.\n";
             exit;
         } else {
+
             return explode(",", str_replace(" ", "", ($input)));
         }
     } else {
@@ -132,6 +133,7 @@ function parseFavourite($favouriteCurrency, $list)
     foreach ($favouriteCurrency as $value) {
         if (array_key_exists($value, $list)) {
             $favs[] = $value;
+
         } else {
             $fail[] = $value;
         }
