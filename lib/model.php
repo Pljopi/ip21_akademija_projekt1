@@ -72,7 +72,8 @@ class Model
             throw new \Exception("Api is down\n");
         }
         if ($httpCode !== 200) {
-            throw new \Exception("You have entered a unsupported currency pair\n WAT?=");
+            throw new \Exception("Api is down\n");
+
         }
         curl_close($ch);
 
@@ -101,7 +102,7 @@ class Model
 
         foreach ($parsedFavourite as $tag) {
             $key = array_search($tag, $list);
-            $this->mysql->insertFavorites($key, $list[$key]);
+            $this->mysql->insertFavorites($key, $list[$key], null);
         }
 
     }

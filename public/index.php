@@ -1,4 +1,5 @@
 <?php
+
 require_once '../lib/bootstrap.php';
 $list = $model->getList();
 $printFavourites = $model->getAllFavourites();

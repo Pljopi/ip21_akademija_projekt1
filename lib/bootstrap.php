@@ -1,14 +1,11 @@
 <?php
+if (!isset($_SESSION)) {
+    session_start();
+}
 
 require_once __DIR__ . '/mysql.php';
 
-$mysql = new Mysql(
-    $servername = getenv('DB_SERVERNAME'),
-    $username = getenv('DB_USERNAME'),
-    $password = getenv('DB_PASSWORD'),
-    $dbname = getenv('DB_NAME'),
-    $charset = getenv('DB_CHARSET')
-);
+$mysql = new Mysql();
 require_once __DIR__ . '/model.php';
 $model = new Model();
 require_once __DIR__ . '/../vendor/autoload.php';
@@ -20,3 +17,4 @@ $twig = new \Twig\Environment($loader, [
 ]);
 
 $twig->getExtension(\Twig\Extension\CoreExtension::class)->setTimezone('Europe/Ljubljana');
+$twig->addGlobal('session', $_SESSION);

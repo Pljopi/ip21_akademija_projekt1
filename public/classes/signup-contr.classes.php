@@ -14,14 +14,7 @@ class SignupContr
         $this->pwd = $pwd;
         $this->pwdRepeat = $pwdRepeat;
         $this->email = $email;
-
-        $this->mysql = new Mysql(
-            $this->servername = getenv('DB_SERVERNAME'),
-            $this->username = getenv('DB_USERNAME'),
-            $this->password = getenv('DB_PASSWORD'),
-            $this->dbname = getenv('DB_NAME_USERS'),
-            $this->charset = getenv('DB_CHARSET')
-        );
+        $this->mysql = new Mysql();
     }
 
     public function signupUser()

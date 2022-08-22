@@ -1,3 +1,5 @@
+{% include "/components/session.php" %}
+{% set user = app.user %}
 <!DOCTYPE html>
 <html>
 
@@ -21,7 +23,8 @@
 						<li><a href="">HELP</a></li>
 						<li><a href="show_list.php">LIST</a></li>
 						<li><a href="show_favourites.php">FAVOURITES</a></li>
-						<li><a href="">{% block LOGINOUT %}LOGIN{% endblock %}</a></li>
+						<li><a href="">You are logged in as&nbsp{{ session.useruid }}<li><a href="includes/logout.inc.php">LOGOUT</a></li>
+							</a></li>
 					</ul>
 				</div>
 			</nav</section>

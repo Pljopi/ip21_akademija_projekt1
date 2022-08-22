@@ -16,13 +16,13 @@ class mysql
     private $charset;
     private $pdo;
 
-    public function __construct($servername, $username, $password, $dbname, $charset)
+    public function __construct()
     {
-        $this->servername = $servername;
-        $this->username = $username;
-        $this->password = $password;
-        $this->dbname = $dbname;
-        $this->charset = $charset;
+        $this->servername = getenv('DB_SERVERNAME');
+        $this->username = getenv('DB_USERNAME');
+        $this->password = getenv('DB_PASSWORD');
+        $this->dbname = getenv('DB_NAME');
+        $this->charset = getenv('DB_CHARSET');
 
         try {
             $dsn = "mysql:host=$this->servername;dbname=$this->dbname;charset=$this->charset";
@@ -39,17 +39,23 @@ class mysql
         $query = 'SELECT * FROM Favourites';
         $stmt = $this->pdo->query($query);
         $gotData = $stmt->fetchAll();
+
         return $gotData;
     }
-    public function insertFavorites($id, $tag)
+
+    public function insertFavorites($id, $tag, $users_id)
     {
-        $query = 'INSERT INTO Favourites (id, tag) VALUES (:id,:tag) ON DUPLICATE KEY UPDATE id=:id, tag=:tag';
+        if ($users_id === null) {
+            $users_id = 0;
+        }
+        $query = 'INSERT IGNORE INTO Favourites (id, tag, users_id) VALUES (:id,:tag, :users_id) ON DUPLICATE KEY UPDATE id=:id, tag=:tag, users_id=:users_id';
         $stmt = $this->pdo->prepare($query);
 
         $stmt->execute(
             [
                 ':id' => $id,
                 ':tag' => $tag,
+                ':users_id' => $users_id,
             ]
         );
     }
@@ -64,7 +70,6 @@ class mysql
         );
     }
 
-    //------------------------//
     //------------------------//
     //------------------------//
     public function setUser($uid, $pwd, $email)
@@ -144,4 +149,26 @@ class mysql
         $stmt = null;
     }
 
+    //------------------------//
+    //------------------------//
+    public function getUserFavourites($user_id)
+    {
+        $stmt = $this->pdo->prepare('SELECT tag FROM Favourites WHERE users_id = ?;');
+
+        if (!$stmt->execute([$user_id])) {
+            $stmt = null;
+            header("location: ../index.php?error=stmtfailed");
+            exit();
+        }
+        if ($stmt->rowCount() == 0) {
+            header("location: ../no_favourites.php");
+        }
+        $userFavourites = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        foreach ($userFavourites as $favourite) {
+            $favourites[] = $favourite['tag'];
+        }
+
+        return $favourites;
+    }
 }
