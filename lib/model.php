@@ -61,10 +61,12 @@ class Model
     {
 
         $ch = curl_init();
-        curl_setopt_array($ch, array(
+        curl_setopt_array(
+            $ch, array(
             CURLOPT_URL => $pricePairOrUrlPair,
             CURLOPT_RETURNTRANSFER => 1,
-        ));
+            )
+        );
         $curl_data = curl_exec($ch);
         $httpCode = (curl_getinfo($ch, CURLINFO_HTTP_CODE));
 
@@ -72,7 +74,7 @@ class Model
             throw new \Exception("Api is down\n");
         }
         if ($httpCode !== 200) {
-            throw new \Exception( header("Location: /index.php?error=unsupported_currency_pair")); //Redirect, for webpage
+            throw new \Exception(header("Location: /index.php?error=unsupported_currency_pair")); //Redirect, for webpage
 
         }
         curl_close($ch);
@@ -93,9 +95,8 @@ class Model
     }
 
     /**
-     * @param int $id
+     * @param int    $id
      * @param string $tag
-     *
      */
     public function saveFavourite($parsedFavourite, $list)
     {

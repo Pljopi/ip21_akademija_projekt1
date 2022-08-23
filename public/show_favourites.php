@@ -7,18 +7,23 @@ $printFavourites = $model->getAllFavourites();
 if (isset($_SESSION['userid'])) {
     $userFavourites = $mysql->getUserFavourites($_SESSION['userid']);
 
-    echo $twig->render('pages/favourites.html.twig',
+    echo $twig->render(
+        'pages/favourites.html.twig',
         [
             'printFavourites' => $userFavourites,
             'ListOfCurrencies' => $list,
-        ]);
+        ]
+    );
 
 } else {
-    echo $twig->render('pages/favourites.html.twig',
+    echo $twig->render(
+        'pages/favourites.html.twig',
         [
             'printFavourites' => $printFavourites,
             'ListOfCurrencies' => $list,
-        ]);}
+        ]
+    );
+}
 
 if (isset($_POST['favourite'])) {
     $favourite = $_POST['favourite'];
