@@ -5,7 +5,11 @@ if (!isset($_SESSION)) {
 
 require_once __DIR__ . '/mysql.php';
 
-$mysql = new Mysql();
+
+
+
+
+  $mysql = new Mysql();
 require_once __DIR__ . '/model.php';
 $model = new Model();
 require_once __DIR__ . '/../vendor/autoload.php';
@@ -13,8 +17,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 $dotenv = Dotenv\Dotenv::createUnsafeImmutable(__DIR__ . '/../');
 $dotenv->load();
 $loader = new \Twig\Loader\FilesystemLoader(__DIR__ . '/views');
-$twig = new \Twig\Environment($loader, [
-]);
+$twig = new \Twig\Environment($loader, [  ]);
 
 $twig->getExtension(\Twig\Extension\CoreExtension::class)->setTimezone('Europe/Ljubljana');
 $twig->addGlobal('session', $_SESSION);

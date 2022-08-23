@@ -1,5 +1,5 @@
 <?php
-ob_start(); //ne spomnem se kdaj sem dal notri??!?!?, ampak rabim, sicer dobim header error, ko kliknem na gumb, prašaj roka!//
+ob_start(); 
 require_once '../lib/bootstrap.php';
 $list = $model->getList();
 $printFavourites = $model->getAllFavourites();

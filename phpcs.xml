@@ -1,0 +1,20 @@
+<ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="PSR2" xsi:noNamespaceSchemaLocation="../../../phpcs.xsd">
+    <description>The PSR-2 coding standard.</description>
+	<arg name="extensions" value="php,module,inc"/>
+    <file>app</file>
+	<arg name="tab-width" value="4"/>
+    <rule ref="PSR1">
+        <exclude name="PSR1.Classes.ClassDeclaration.MissingNamespace"/>
+	</rule>
+    <rule ref="PSR2">
+        <exclude name="Generic.WhiteSpace.DisallowTabIndent"/>
+        <exclude name="Generic.Files.LineLength"/>
+    </rule>
+	<rule ref="Generic.WhiteSpace.DisallowSpaceIndent"/>
+    <rule ref="Generic.WhiteSpace.ScopeIndent">
+        <properties>
+            <property name="indent" value="4"/>
+            <property name="tabIndent" value="true"/>
+        </properties>
+    </rule>
+</ruleset> 

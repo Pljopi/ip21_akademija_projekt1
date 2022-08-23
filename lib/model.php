@@ -72,7 +72,7 @@ class Model
             throw new \Exception("Api is down\n");
         }
         if ($httpCode !== 200) {
-            throw new \Exception("Api is down\n");
+            throw new \Exception( header("Location: /index.php?error=unsupported_currency_pair")); //Redirect, for webpage
 
         }
         curl_close($ch);
