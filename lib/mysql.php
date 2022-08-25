@@ -52,8 +52,7 @@ class mysql
         if (!is_numeric($users_id)) {
             $users_id = 0;
         }
-        $query =
-        "INSERT IGNORE INTO Favourites (id, tag, users_id) VALUES (:id,:tag, :users_id) ON DUPLICATE KEY UPDATE id=:id, tag=:tag, users_id=:users_id";
+        $query = "INSERT IGNORE INTO Favourites (id, tag, users_id) VALUES (:id,:tag, :users_id) ON DUPLICATE KEY UPDATE id=:id, tag=:tag, users_id=:users_id";
         $stmt = $this->pdo->prepare($query);
 
         $stmt->execute(
@@ -157,7 +156,7 @@ class mysql
 
         if ($checkPwd == false) {
             header("location: ../attempts_failed.php?num_tries=" . $numberOfTries);
-            
+
         } elseif ($checkPwd == true) {
             $query ="SELECT * FROM users WHERE users_uid = :users_uid OR users_email = :users_email AND USERS_PWD = :users_pwd;";
             $stmt = $this->pdo->prepare($query);
