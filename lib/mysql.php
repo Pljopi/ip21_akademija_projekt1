@@ -14,6 +14,7 @@ class mysql
     private $dbname;
     private $charset;
     private $pdo;
+    private $ip_adress;
 
     public function __construct()
     {
@@ -22,7 +23,7 @@ class mysql
         $this->password = getenv("DB_PASSWORD");
         $this->dbname = getenv("DB_NAME");
         $this->charset = getenv("DB_CHARSET");
-
+        $this->ip_adress = $_SERVER['REMOTE_ADDR'];
         try {
             $dsn = "mysql:host=$this->servername;dbname=$this->dbname;charset=$this->charset";
             $this->pdo = new PDO($dsn, $this->username, $this->password);
@@ -131,10 +132,9 @@ class mysql
     //------------------------//
     //Login
     //------------------------//
-    public function getUser($uid, $pwd)
+    public function getUser($uid, $pwd, $numberOfTries)
     {
-        $query =
-        "SELECT users_pwd FROM users WHERE users_uid = :users OR users_email = :users;";
+        $query = "SELECT users_pwd FROM users WHERE users_uid = :users OR users_email = :users;";
         $stmt = $this->pdo->prepare($query);
 
         if (!$stmt->execute(
@@ -156,10 +156,10 @@ class mysql
         $checkPwd = password_verify($pwd, $pwdHashed[0]["users_pwd"]);
 
         if ($checkPwd == false) {
-            header("location: ../index.php?error=wrongpwd");
+            header("location: ../attempts_failed.php?num_tries=" . $numberOfTries);
+            
         } elseif ($checkPwd == true) {
-            $query =
-            "SELECT * FROM users WHERE users_uid = :users_uid OR users_email = :users_email AND USERS_PWD = :users_pwd;";
+            $query ="SELECT * FROM users WHERE users_uid = :users_uid OR users_email = :users_email AND USERS_PWD = :users_pwd;";
             $stmt = $this->pdo->prepare($query);
 
             if (!$stmt->execute(
@@ -182,8 +182,11 @@ class mysql
             $user = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
             session_start();
+            
             $_SESSION["userid"] = $user[0]["users_id"];
             $_SESSION["useruid"] = $user[0]["users_uid"];
+            $this->clearAllIpAndTimeStamp($this->ip_adress);
+            header("Location: ../Index.php?Welcome");
         }
         $stmt = null;
     }
@@ -196,11 +199,9 @@ class mysql
      * 'tag' is favourite currency TAG
      * @return ARRAY
      */
-    public function getUserFavourites($user_id)
-    {
-        $stmt = $this->pdo->prepare(
-            "SELECT tag FROM Favourites WHERE users_id = :user_id;"
-        );
+    public function getUserFavourites($user_id){
+        $query="SELECT tag FROM Favourites WHERE users_id = :user_id;";
+        $stmt = $this->pdo->prepare($query);
 
         if (!$stmt->execute(
             [
@@ -224,4 +225,55 @@ class mysql
 
         return $userFavourites;
     }
+
+    //------------------------//
+    //IP-specific interactions
+    //------------------------//
+
+    public function insertIpAndTimeStamp($ip_adress){
+        $time = date("Y-m-d H:i:s");
+        $query=  "INSERT INTO IPadress (ip_adress, TIME) VALUES (:ip_adress, :TIME);";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute(
+            [
+            ":ip_adress" => $ip_adress,
+            ":TIME" => $time,
+            ]
+            
+        );
+    }
+        public function getIpAndTimeStampCount($ip_adress){
+        $query =   "SELECT TIME FROM IPadress WHERE ip_adress = :ip_adress AND TIME > DATE_SUB(NOW(), INTERVAL 1 hour) ORDER BY TIME DESC;";
+        $stmt = $this->pdo->prepare($query);
+
+        $stmt->execute(
+            [
+            ":ip_adress" => $ip_adress,
+            ]
+        );
+        $getIpAndTimeStampCount = $stmt->rowCount();
+        
+        return $getIpAndTimeStampCount;
+       
+    }
+
+    //----------Clears IP And Time Stamp older than 1h--------------//
+    public function clearOldIpAndTimeStamp(){
+        $query =  "DELETE FROM IPadress WHERE TIME < DATE_SUB(NOW(), INTERVAL 1 hour);";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute();
+    }
+//----------Clears all IP And Time Stamp associated with the user's IP on sucessfull log in. --------------//
+    public function clearAllIpAndTimeStamp($ip_adress){
+        $query =  "DELETE FROM IPadress WHERE :ip_adress = ip_adress;";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute(
+            [
+            ":ip_adress" => $this->ip_adress,
+            ]
+        );
+    
+    }
+   
+
 }

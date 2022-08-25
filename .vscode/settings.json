@@ -2,5 +2,5 @@
 	"cSpell.language": "en",
 	"cSpell.enableFiletypes": ["twig"],
 	"editor.formatOnSave": true,
-	"cSpell.words": ["servername"]
+	"cSpell.words": ["servername", "tukaj"]
 }
