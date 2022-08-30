@@ -1,4 +1,8 @@
-
+Short version:
+-For console.php the available CLI commands are found in user_stories.md
+-Otherwise run index.php in your localhost.
+ ++It is so far possible to signup, login, logour. Every user can add his/her favourite currencies.
+ ++If no user is logged in the favourite currency is attributed to the default users_id = 0
 ```
 Edit the .env.example file into .env and input your own server data!!!
 
