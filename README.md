@@ -1,120 +1,57 @@
+# Crypto price app and webstie
 
-Edit the .env.example file into .env and input your own server data!!!
+---
+Simple CLI app and website
+This is a learning project in a unfinished stage, it is still being updated.
 
-ip21_akademija_projekt1
-├─ .git
-│  ├─ COMMIT_EDITMSG
-│  ├─ FETCH_HEAD
-│  ├─ HEAD
-│  ├─ ORIG_HEAD
-│  ├─ branches
-│  ├─ config
-│  ├─ description
-│  ├─ hooks
-│  │  ├─ applypatch-msg.sample
-│  │  ├─ commit-msg.sample
-│  │  ├─ fsmonitor-watchman.sample
-│  │  ├─ post-update.sample
-│  │  ├─ pre-applypatch.sample
-│  │  ├─ pre-commit.sample
-│  │  ├─ pre-merge-commit.sample
-│  │  ├─ pre-push.sample
-│  │  ├─ pre-rebase.sample
-│  │  ├─ pre-receive.sample
-│  │  ├─ prepare-commit-msg.sample
-│  │  ├─ push-to-checkout.sample
-│  │  └─ update.sample
-│  ├─ index
-│  ├─ info
-│  │  └─ exclude
-│  ├─ logs
-│  │  ├─ HEAD
-│  │  └─ refs
-│  │     ├─ heads
-│  │     │  └─ main
-│  │     └─ remotes
-│  │        └─ origin
-│  │           ├─ HEAD
-│  │           └─ main
-│  ├─ objects
-│  │  ├─ 00
-infinity lines of random
-│  │  ├─ info
-│  │  └─ pack
-│  │     ├─ pack-bd8fc767e90387e8277a75d124735b43b86cbe32.idx
-│  │     └─ pack-bd8fc767e90387e8277a75d124735b43b86cbe32.pack
-│  ├─ packed-refs
-│  └─ refs
-│     ├─ heads
-│     │  └─ main
-│     ├─ remotes
-│     │  └─ origin
-│     │     ├─ HEAD
-│     │     └─ main
-│     └─ tags
-the good stuff starts here
-├─ .gitignore
-├─ Dockerfile
-├─ README.md
-├─ composer.json
-├─ composer.lock
-├─ console.php
-├─ docker-compose.yml
-├─ docker-env
-│  ├─ mysql
-│  │  └─ my.cnf
-│  ├─ nginx
-│  │  └─ conf.d
-│  │     └─ dev
-│  │        ├─ app.conf
-│  │        ├─ nginx.crt
-│  │        └─ nginx.key
-│  └─ php
-│     └─ local.ini
-├─ lib
-│  ├─ bootstrap.php
-│  ├─ classes
-│  ├─ model.php
-│  ├─ mysql.php
-│  └─ views
-│     ├─ components
-│     │  ├─ login.html.twig
-│     │  └─ signup.html.twig
-│     ├─ layouts
-│     │  ├─ base.html.twig
-│     │  └─ console.twig
-│     └─ pages
-│        ├─ added.favourites.twig
-│        ├─ error.$message.twig
-│        ├─ favourites.html.twig
-│        ├─ favourites.twig
-│        ├─ help.twig
-│        ├─ list.html.twig
-│        ├─ list.twig
-│        ├─ login.html.twig
-│        ├─ price.html.twig
-│        ├─ price.twig
-│        └─ show.list.html.twig
-├─ public
-│  ├─ classes
-│  │  ├─ login-contr.classes.php
-│  │  └─ signup-contr.classes.php
-│  ├─ css
-│  │  └─ style.css
-│  ├─ images
-│  │  ├─ background.jpg
-│  │  ├─ logo.png
-│  │  └─ star.jpg
-│  ├─ includes
-│  │  ├─ login.inc.php
-│  │  ├─ logout.inc.php
-│  │  └─ signup.inc.php
-│  ├─ index.php
-│  ├─ login_user.php
-│  ├─ show_favourites.php
-│  ├─ show_list.php
-│  └─ show_price.php
-├─ test.php
-└─ user_stories.md
+---
 
-```
+## Set up
+
+Install docker and docker compose
+
+Install composer and twig
+
+Install twig
+
+Build on:
+
+* PHP : '8'
+* twig : '2.15.1'.
+* phpmyadmin : 5
+* mysql : 8
+* nginx: alpine
+
+Fill your .env file with your server data
+
+---
+
+## * CLI app
+
+* For exstensive  instructions on how to use the CLI app, refer to user_stories.md
+
+---
+
+## * WEBSITE
+
+* Basic website, user can signup, login and add/remove currencies from his/her lsit of favourites and check currency prices.
+* User is limited to 3 failed log-in attempts from a single IP-address/h.
+
+---
+
+## MySql database and tables
+
+### * Database : crypto
+
+* table "favourites":
+"tag", "id", "users_id" 
+
+//both "tag" and "users_id" are unique
+* table "IPadress":
+"ip_adress" "TIME"
+* table "users":
+"users_id", "users_uid", "users_pwd", "users_email"  
+
+// "users_id" is unique
+
+

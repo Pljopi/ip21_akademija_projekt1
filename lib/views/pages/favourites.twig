@@ -5,11 +5,12 @@
 	{% if printFavourites is empty %}
 
 		You have yet to pick any favourite currencies.
-	{% endif %}
 
-	{% for key in printFavourites %}
-		*
-		{{key}}
+{% else %}
+ your favourite currencies are 
+	{% for key in printFavourites %} 
+	
+			*{{key}}
 	{% endfor %}
-
+		{% endif %}
 {% endblock %}

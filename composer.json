@@ -6,6 +6,7 @@
         "twig/extra-bundle": "^3.4",
         "squizlabs/php_codesniffer": "*",
         "league/config": "^1.1",
-        "league/climate": "^3.8"
+        "league/climate": "^3.8",
+        "twig/html-extra": "^3.4"
       }
 }

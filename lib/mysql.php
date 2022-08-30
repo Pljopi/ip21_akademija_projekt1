@@ -39,12 +39,15 @@ class mysql
 
     public function getFavorites()
     {
-        $query = "SELECT * FROM Favourites";
+        $query = "SELECT tag FROM Favourites WHERE users_id = '0'";
         $stmt = $this->pdo->query($query);
         $gotData = $stmt->fetchAll();
 
         return $gotData;
     }
+
+
+
 
     public function insertFavorites($id, $tag, $users_id)
     {
