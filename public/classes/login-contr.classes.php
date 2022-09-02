@@ -13,6 +13,7 @@ class LoginContr
         $this->pwd = $pwd;
         $this->mysql = new Mysql();
         $this->ip_adress = $_SERVER['REMOTE_ADDR'];
+      
     }
 
     public function loginUser()
@@ -45,16 +46,14 @@ class LoginContr
     }
 
 public function numberOfTries():int{
+   
  
-    $numberOfTries = $this->mysql->getIpAndTimeStampCount($this->$ip_adress);
+    $numberOfTries = $this->mysql->getIpAndTimeStampCount($this->ip_adress);
     $numberOfRemainingTries = 3 - $numberOfTries;
     $this->mysql ->clearOldIpAndTimeStamp();
   return $numberOfRemainingTries;
 }
 }
-
-
-
 
 
 
