@@ -10,9 +10,18 @@ This is a learning project in a unfinished stage, it is still being updated.
 
 Install docker and docker compose
 
-Install composer and twig
+Build docker:
 
-Install twig
+    docker-compose up -d
+
+Enter container:
+    docker-compose exec php_app bash
+
+Build dependencies:
+
+    composer install
+
+    twig install
 
 Build on:
 
@@ -34,7 +43,7 @@ Fill your .env file with your server data
 
 ## * WEBSITE
 
-* Basic website, user can signup, login and add/remove currencies from his/her lsit of favourites and check currency prices.
+* Basic website, user can signup, login and add/remove currencies from his/her list of favourites and check currency prices.
 * User is limited to 3 failed log-in attempts from a single IP-address/h.
 
 ---
