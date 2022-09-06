@@ -3,7 +3,9 @@ ________________________________________________________________________________
 Command line application that accepts max 3 user inputs and displays the value of chosen cryptocurrency denominated in chosen currency.
 This is a learning project, using open coingecko API
 
-to start the app type php console.php "the accepted inputs go here", from the root project directory.
+Run with:
+
+    php console.php help
 
 
 
